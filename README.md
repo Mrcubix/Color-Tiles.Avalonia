@@ -13,7 +13,7 @@ This game is made in Godot 4 using C# as it is my main language.
 
 ## Dependencies
 
-- .NET 6 **Desktop Runtime**: [Link](https://dotnet.microsoft.com/en-us/download/dotnet/6.0#:~:text=x86-,.NET%20Desktop%20Runtime%206.0.21,-The%20.NET%20Desktop) | [Fallback Link](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+- .NET 7 **Desktop Runtime**: [Link](https://dotnet.microsoft.com/en-us/download/dotnet/6.0#:~:text=x86-,.NET%20Desktop%20Runtime%206.0.21,-The%20.NET%20Desktop) | [Fallback Link](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 
 ## Download
 

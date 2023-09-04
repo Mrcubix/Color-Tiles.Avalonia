@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:locals="clr-namespace:ColorTiles.Assets.Localizations"
+             xmlns:vm="clr-namespace:ColorTiles.ViewModels.Menus"
+             mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
+             x:Class="ColorTiles.Views.Menus.MainMenu"
+             x:DataType="vm:MainMenuViewModel"
+             Background="Transparent">
+
+    <Design.DataContext>
+        <vm:MainMenuViewModel />
+    </Design.DataContext>
+
+    <UserControl.Styles>
+        <!-- styles for PlayButton -->
+        <Style Selector="Button#PlayButton">
+            <!-- Transparent bg -->
+            <Setter Property="Background" Value="Transparent" />
+            <!-- No border -->
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <!-- Remove background on hover on ContentPresenter -->
+        <Style Selector="Button#PlayButton:pointerover ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid RowDefinitions="*,Auto,*,Auto,*" ColumnDefinitions="*,Auto,*" >
+
+        <Image Source="/Assets/Sprites/Title.png" Grid.Row="1" Grid.Column="1" />
+
+        <Button Name="PlayButton" Command="{Binding OnPlayButtonClicked}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" >
+            <Button.Content>
+                <Image Source="/Assets/Sprites/Play.png" Grid.Row="3" Grid.Column="1" />
+            </Button.Content>
+        </Button>
+        
+    </Grid>
+
+</UserControl>

@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:ColorTiles.ViewModels"
+             xmlns:menus="clr-namespace:ColorTiles.Views.Menus"
+             mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
+             x:Class="ColorTiles.Views.MainView"
+             x:DataType="vm:MainViewModel">
+
+    <Design.DataContext>
+        <vm:MainViewModel />
+    </Design.DataContext>
+
+    <Grid>
+        <menus:MainMenu Name="MainMenuControl" />
+        <menus:GameOverMenu Name="GameOverMenuControl" />
+  </Grid>
+
+</UserControl>

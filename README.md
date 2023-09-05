@@ -1,4 +1,4 @@
-# Color Tiles in Avalonia
+# Color Tiles in Avalonia (Port) (Work In Progress)
 
 ## Premises
 
@@ -9,11 +9,11 @@ The rest of this README is the same as the original, for now.
 ## Introduction
 
 This is a modern clone of the classic game Color Tiles from [en.gamesaien.com](https://en.gamesaien.com/).
-This game is made in Godot 4 using C# as it is my main language.
+This game is made in Avalonia.
 
 ## Dependencies
 
-- .NET 7 **Desktop Runtime**: [Link](https://dotnet.microsoft.com/en-us/download/dotnet/6.0#:~:text=x86-,.NET%20Desktop%20Runtime%206.0.21,-The%20.NET%20Desktop) | [Fallback Link](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+- .NET 7 **Desktop Runtime**: [Link](https://dotnet.microsoft.com/en-us/download/dotnet/7.0#runtime-desktop-7.0.10:~:text=x86-,.NET%20Desktop%20Runtime,-7.0.10) | [Fallback Link](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
 
 ## Download
 
@@ -58,10 +58,18 @@ For MacOS users, i'm sorry but you will have to deal with Apple's Gatekeeper.
 ## How to build
 
 - Clone this repository
-- Open the project in Godot 4
-- You can either start the game from the editor or export it to your platform of choice
+- Open the project with your terminal of choice
+- Copy the followings :
+```bash
+dotnet restore
+// Building for windows
+dotnet publish ColorTiles.Desktop -c Release -r win-x64 -p:PublishSingleFile=true
+// Building for linux
+dotnet publish ColorTiles.Desktop -c Release -r linux-x64 -p:PublishSingleFile=true
+```
+- You can then start the game using the built Release binaries
 
-## Is there anything i can do to help?
+## Is there anything i can do to help? (None as of now, WIP)
 
 There are a couple things that are missing, like:
 

@@ -1,6 +1,5 @@
 using System;
 using Avalonia.Controls;
-using ColorTiles.Entities.Tools;
 using ColorTiles.ViewModels.Menus;
 
 namespace ColorTiles.Views.Menus
@@ -14,18 +13,7 @@ namespace ColorTiles.Views.Menus
         {
             InitializeComponent();
 
-            //Hide();
-        }
-
-        protected override void OnDataContextBeginUpdate()
-        {
-            base.OnDataContextBeginUpdate();
-
-            if (DataContext is GameOverMenuViewModel viewModel)
-            {
-                viewModel.PlayAgainButtonClicked -= OnPlayAgainButtonClicked;
-                viewModel.QuitButtonClicked -= OnQuitButtonClicked;
-            }
+            Hide();
         }
 
         protected override void OnDataContextChanged(EventArgs e)
@@ -40,6 +28,17 @@ namespace ColorTiles.Views.Menus
             {
                 viewModel.PlayAgainButtonClicked += OnPlayAgainButtonClicked;
                 viewModel.QuitButtonClicked += OnQuitButtonClicked;
+            }
+        }
+
+        protected override void OnDataContextBeginUpdate()
+        {
+            base.OnDataContextBeginUpdate();
+
+            if (DataContext is GameOverMenuViewModel viewModel)
+            {
+                viewModel.PlayAgainButtonClicked -= OnPlayAgainButtonClicked;
+                viewModel.QuitButtonClicked -= OnQuitButtonClicked;
             }
         }
 

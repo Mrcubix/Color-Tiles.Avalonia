@@ -6,7 +6,7 @@
         xmlns:views="clr-namespace:ColorTiles.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="ColorTiles.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/Sprites/icon_192.png"
         Title="ColorTiles"
         Background="FloralWhite">
         <views:MainView />

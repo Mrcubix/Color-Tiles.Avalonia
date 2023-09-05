@@ -11,7 +11,6 @@ namespace ColorTiles.Views.Menus
         public MainMenu()
         {
             InitializeComponent();
-            Hide();
         }
 
         protected override void OnDataContextBeginUpdate()

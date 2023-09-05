@@ -19,10 +19,8 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        // set the data culture for the current thread
-        Thread.CurrentThread.CurrentCulture = CultureInfo.CurrentUICulture;
-
-        Assets.Localizations.Resources.Culture = CultureInfo.CurrentUICulture;
+        //Assets.Localizations.Resources.Culture = CultureInfo.CurrentUICulture;
+        Assets.Localizations.Resources.Culture = new CultureInfo("en-US");
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {

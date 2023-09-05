@@ -7,8 +7,6 @@ namespace ColorTiles.Views.Menus
 {
     public partial class GameOverMenu : UserControl
     {
-        public Localization Localization { get; set; }
-
         public event EventHandler? PlayAgainButtonClicked;
         public event EventHandler? QuitButtonClicked;
 
@@ -16,28 +14,32 @@ namespace ColorTiles.Views.Menus
         {
             InitializeComponent();
 
-            Hide();
-
-            Localization = Localization.Default;
+            //Hide();
         }
 
-        public GameOverMenu(Localization localization) : this()
+        protected override void OnDataContextBeginUpdate()
         {
-            Localization = localization;
+            base.OnDataContextBeginUpdate();
+
+            if (DataContext is GameOverMenuViewModel viewModel)
+            {
+                viewModel.PlayAgainButtonClicked -= OnPlayAgainButtonClicked;
+                viewModel.QuitButtonClicked -= OnQuitButtonClicked;
+            }
         }
 
         protected override void OnDataContextChanged(EventArgs e)
         {
             base.OnDataContextChanged(e);
 
-            if (DataContext is not GameOverMenuViewModel)
+            /*if (DataContext is not GameOverMenuViewModel)
             {
-                DataContext = new GameOverMenuViewModel(0, Localization.Default);
+                DataContext = new GameOverMenuViewModel(0);
             }
-            else if (DataContext is GameOverMenuViewModel viewModel)
+            else */if (DataContext is GameOverMenuViewModel viewModel)
             {
-                viewModel.PlayAgainButtonClicked -= OnPlayAgainButtonClicked;
-                viewModel.QuitButtonClicked -= OnQuitButtonClicked;
+                viewModel.PlayAgainButtonClicked += OnPlayAgainButtonClicked;
+                viewModel.QuitButtonClicked += OnQuitButtonClicked;
             }
         }
 

@@ -6,19 +6,15 @@
              xmlns:vm="clr-namespace:ColorTiles.ViewModels.Menus"
              mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
              x:Class="ColorTiles.Views.Menus.MainMenu"
-             x:DataType="vm:MainMenuViewModel"
-             Background="Transparent">
+             x:DataType="vm:MainMenuViewModel">
 
     <Design.DataContext>
         <vm:MainMenuViewModel />
     </Design.DataContext>
 
     <UserControl.Styles>
-        <!-- styles for PlayButton -->
         <Style Selector="Button#PlayButton">
-            <!-- Transparent bg -->
             <Setter Property="Background" Value="Transparent" />
-            <!-- No border -->
             <Setter Property="BorderThickness" Value="0" />
         </Style>
         <!-- Remove background on hover on ContentPresenter -->

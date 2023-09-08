@@ -6,6 +6,7 @@ using ColorTiles.Entities.Tilesets;
 using ColorTiles.Entities.Tools;
 using ColorTiles.ViewModels.Controls;
 using ColorTiles.ViewModels.Menus;
+using ReactiveUI;
 
 namespace ColorTiles.ViewModels;
 
@@ -20,6 +21,17 @@ public class MainViewModel : ViewModelBase
     public MainMenuViewModel MainMenuViewModel { get; set; }
     public GameOverMenuViewModel GameOverMenuViewModel { get; set; }
 
+    private object _CurrentMenu;
+
+    /// <summary>
+    /// Gets or sets the current Menu
+    /// </summary>
+    public object CurrentMenu
+    {
+        get => _CurrentMenu;
+        set => this.RaiseAndSetIfChanged(ref _CurrentMenu, value);
+    }
+
     public MainViewModel()
     {
         //TileSetManager = new TileSetManager();
@@ -28,8 +40,11 @@ public class MainViewModel : ViewModelBase
         Initialize();
 
         GameBoardViewModel = new GameBoardViewModel();
-        MainMenuViewModel = new MainMenuViewModel();
+        MainMenuViewModel = new MainMenuViewModel(this);
         GameOverMenuViewModel = new GameOverMenuViewModel();
+
+        // Navigate to MainMenu
+        CurrentMenu = MainMenuViewModel;
     }
 
     private void Initialize()

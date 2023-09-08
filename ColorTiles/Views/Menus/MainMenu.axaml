@@ -27,7 +27,7 @@
 
         <Image Source="/Assets/Sprites/Title.png" Grid.Row="1" Grid.Column="1" />
 
-        <Button Name="PlayButton" Command="{Binding OnPlayButtonClicked}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" >
+        <Button Name="PlayButton" Command="{Binding PlayGameCommand}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" >
             <Button.Content>
                 <Image Source="/Assets/Sprites/Play.png" Grid.Row="3" Grid.Column="1" />
             </Button.Content>

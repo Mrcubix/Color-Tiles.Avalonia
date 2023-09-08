@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:locals="clr-namespace:ColorTiles.ViewModels.Controls"
              xmlns:vm="clr-namespace:ColorTiles.ViewModels.Controls"
+             xmlns:entities="clr-namespace:ColorTiles.Entities"
              mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
              x:Class="ColorTiles.Views.Controls.GameBoard"
              x:DataType="vm:GameBoardViewModel">
@@ -14,7 +15,7 @@
 
     <ItemsRepeater ItemsSource="{Binding ColorTiles}">
         <ItemsRepeater.ItemTemplate>
-            <DataTemplate>
+            <DataTemplate DataType="entities:ColorTile">
                 <Image Source="{Binding Image}" />
             </DataTemplate>
         </ItemsRepeater.ItemTemplate>

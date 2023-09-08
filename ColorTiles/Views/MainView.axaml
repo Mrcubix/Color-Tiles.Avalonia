@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:ColorTiles.ViewModels"
              xmlns:menus="clr-namespace:ColorTiles.Views.Menus"
              xmlns:controls="clr-namespace:ColorTiles.Views.Controls"
+             xmlns:models="clr-namespace:ColorTiles.ViewModels.Menus"
              mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
              x:Class="ColorTiles.Views.MainView"
              x:DataType="vm:MainViewModel">
@@ -16,8 +17,17 @@
     <Grid>
         <controls:GameBackground Name="GameBackgroundControl" HorizontalAlignment="Stretch" Tileset="{Binding Tileset}" />
         <controls:GameBoard Name="GameBoardControl" DataContext="{Binding GameBoardViewModel}" Rows="15" Columns="23"/>
-        <menus:MainMenu Name="MainMenuControl" DataContext="{Binding MainMenuViewModel}"/>
-        <menus:GameOverMenu Name="GameOverMenuControl" DataContext="{Binding GameOverMenuViewModel}"/>
+        
+        <ContentControl Content="{Binding CurrentMenu}">
+            <ContentControl.DataTemplates>
+                <DataTemplate DataType="models:MainMenuViewModel">
+                    <menus:MainMenu />
+                </DataTemplate>
+                <DataTemplate DataType="models:GameOverMenuViewModel">
+                    <menus:GameOverMenu />
+                </DataTemplate>
+            </ContentControl.DataTemplates>
+        </ContentControl>
   </Grid>
 
 </UserControl>

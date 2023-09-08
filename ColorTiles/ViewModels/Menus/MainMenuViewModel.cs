@@ -4,10 +4,16 @@ namespace ColorTiles.ViewModels.Menus;
 
 public class MainMenuViewModel : ViewModelBase
 {
-    public event EventHandler? PlayButtonClicked;
 
-    public void OnPlayButtonClicked()
+    private readonly MainViewModel _Parent;
+
+    public MainMenuViewModel(MainViewModel parent)
     {
-        PlayButtonClicked?.Invoke(this, EventArgs.Empty);
+        _Parent = parent;
+    }
+
+    public void PlayGameCommand()
+    {
+        _Parent.CurrentMenu = _Parent.GameOverMenuViewModel;
     }
 }

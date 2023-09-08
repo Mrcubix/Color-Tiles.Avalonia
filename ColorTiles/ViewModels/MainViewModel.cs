@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
@@ -34,7 +34,7 @@ public class MainViewModel : ViewModelBase
 
     private void Initialize()
     {
-        if (!TryLoadImageAsset("Tilesets/Color-Tiles.png", out IImage? image))
+        if (!TryLoadImageAsset("tilesets/Color-Tiles.png", out IImage? image))
         {
             throw new Exception("Failed to load image asset.");
         }

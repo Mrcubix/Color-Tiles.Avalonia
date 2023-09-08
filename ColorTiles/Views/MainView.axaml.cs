@@ -1,5 +1,6 @@
 using System;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using ColorTiles.ViewModels;
 using ColorTiles.ViewModels.Menus;
 
@@ -7,9 +8,13 @@ namespace ColorTiles.Views;
 
 public partial class MainView : UserControl
 {
+    private Window? _window;
+
     public MainView()
     {
         InitializeComponent();
+
+        _window = TopLevel.GetTopLevel(this) as Window;
     }
 
     protected override void OnDataContextBeginUpdate()
@@ -81,6 +86,6 @@ public partial class MainView : UserControl
     /// </summary>
     private void OnGameOverMenuQuitButtonClicked(object? sender, EventArgs e)
     {
-        Environment.Exit(0);
+        _window?.Close();
     }
 }

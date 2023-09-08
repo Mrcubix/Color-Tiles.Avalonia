@@ -1,10 +1,17 @@
 ﻿using System;
+using ReactiveUI;
 
 namespace ColorTiles.ViewModels.Menus;
 
 public class GameOverMenuViewModel : ViewModelBase
 {
-    public int Score { get; set; }
+    private int _score;
+    
+    public int Score
+    {
+        get => _score;
+        set => this.RaiseAndSetIfChanged(ref _score, value);
+    }
 
     public event EventHandler? PlayAgainButtonClicked;
     public event EventHandler? QuitButtonClicked;

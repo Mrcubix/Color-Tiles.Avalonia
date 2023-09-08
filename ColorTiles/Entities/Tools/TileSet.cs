@@ -4,43 +4,46 @@ using System.Numerics;
 using Avalonia;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
-using Avalonia.Platform;
 
 namespace ColorTiles.Entities.Tools
 {
     public class TileSet
     {
         public int ID { get; set; }
-        public IImage TileSetBitmap { get; set; }
+        public IImage TilesetBitmap { get; set; }
         public List<IImage> Tiles { get; private set; }
-        public Vector2 Separation { get; set; }
-        public Vector2 TextureResolution { get; set; }
+        public PixelSize TilesetTileDimensions { get; set; }
+        public PixelSize Separation { get; set; }
+        public PixelSize TextureResolution { get; set; }
 
-        public TileSet(int id, IImage tileSetBitmap, Vector2 separation, Vector2 textureResolution)
+        public TileSet(int id, IImage tileSetBitmap, PixelSize separation, PixelSize textureResolution)
         {
-            TileSetBitmap = tileSetBitmap;
+            TilesetBitmap = tileSetBitmap;
             Separation = separation;
             TextureResolution = textureResolution;
 
             Tiles = new List<IImage>();
+            TilesetTileDimensions = new PixelSize(
+                (int)(TilesetBitmap.Size.Width / (TextureResolution.Width + Separation.Width)),
+                (int)(TilesetBitmap.Size.Height / (TextureResolution.Height + Separation.Height))
+            );
 
             Initialize();
         }
 
-        public TileSet(int id, IImage tileSetBitmap, Vector2 textureResolution) : this(id, tileSetBitmap, new Vector2(0, 0), textureResolution)
+        public TileSet(int id, IImage tileSetBitmap, PixelSize textureResolution) : this(id, tileSetBitmap, new PixelSize(0, 0), textureResolution)
         {
         }
 
-        public TileSet(int id,IImage tileSetBitmap) : this(id, tileSetBitmap, new Vector2(0, 0), new Vector2(1, 1))
+        public TileSet(int id, IImage tileSetBitmap) : this(id, tileSetBitmap, new PixelSize(0, 0), new PixelSize(1, 1))
         {
         }
 
         private void Initialize()
         {
-            // Seperate the tileset into individual tiles
-            for (int y = 0; y < TileSetBitmap.Size.Height; y += (int) (TextureResolution.Y + Separation.Y))
+            for (int y = 0; y < TilesetBitmap.Size.Height; y += (TextureResolution.Height + Separation.Height))
             {
-                for (int x = 0; x < TileSetBitmap.Size.Width; x += (int) (TextureResolution.X + Separation.X))
+                for (int x = 0; x < TilesetBitmap.Size.Width; x += (TextureResolution.Width + Separation.Width))
                 {
                     ExtractTile(x, y);
                 }
@@ -50,8 +53,8 @@ namespace ColorTiles.Entities.Tools
         private void ExtractTile(int x, int y)
         {
             Tiles.Add(
-                new CroppedBitmap(TileSetBitmap, 
-                    new PixelRect(x, y, (int)TextureResolution.X, (int)TextureResolution.Y)));
+                new CroppedBitmap(TilesetBitmap, 
+                    new PixelRect(x, y, TextureResolution.Width, TextureResolution.Height)));
         }
 
         public void Dispose()
@@ -63,7 +66,7 @@ namespace ColorTiles.Entities.Tools
 
             Tiles.Clear();
 
-            (TileSetBitmap as IDisposable)?.Dispose();
+            (TilesetBitmap as IDisposable)?.Dispose();
         }
 
     }

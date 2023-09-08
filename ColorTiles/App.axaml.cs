@@ -1,6 +1,4 @@
-using System;
 using System.Globalization;
-using System.Threading;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;

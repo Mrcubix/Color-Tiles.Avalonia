@@ -4,6 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <IncludeAvaloniaGenerators>true</IncludeAvaloniaGenerators>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -13,13 +14,13 @@
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
-    <!--<ProjectReference Include="$(AVALONIA_ROOT)/src/Avalonia.Desktop/Avalonia.Desktop.csproj" />
-    <ProjectReference Include="$(AVALONIA_ROOT)/src/Avalonia.Diagnostics/Avalonia.Diagnostics.csproj" />-->
+    <!--<ProjectReference Include="../.modules/Avalonia/src/Avalonia.Desktop/Avalonia.Desktop.csproj" />
+    <ProjectReference Include="../.modules/Avalonia/src/Avalonia.Diagnostics/Avalonia.Diagnostics.csproj" />-->
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="../ColorTiles/ColorTiles.csproj" />
   </ItemGroup>
 
-  <!--<Import Project="$(AVALONIA_ROOT)/build/ReferenceCoreLibraries.props" />-->
+  <!--<Import Project="../.modules/Avalonia/build/ReferenceCoreLibraries.props" />-->
 </Project>

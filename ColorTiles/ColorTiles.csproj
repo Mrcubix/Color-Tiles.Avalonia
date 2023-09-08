@@ -5,28 +5,31 @@
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-    <CoreCompileDependsOn>PrepareResources;$(CompileDependsOn)</CoreCompileDependsOn>
+    <IncludeAvaloniaGenerators>true</IncludeAvaloniaGenerators>
   </PropertyGroup>
 
   <ItemGroup>
-    <AvaloniaResource Include="Assets\**"/>
+    <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectCapability Include="Avalonia"/>
-    <TrimmerRootAssembly Include="Avalonia.Themes.Fluent"/>
+    <ProjectCapability Include="Avalonia" />
+    <TrimmerRootAssembly Include="Avalonia.Themes.Fluent" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)"/>
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)"/>
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)"/>
-    <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)"/>
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)"/><!--<ProjectReference Include="$(AVALONIA_ROOT)\packages\Avalonia\Avalonia.csproj" />
-    <ProjectReference Include="$(AVALONIA_ROOT)/src/Avalonia.Themes.Fluent/Avalonia.Themes.Fluent.csproj" />
-    <ProjectReference Include="$(AVALONIA_ROOT)/src/Avalonia.Fonts.Inter/Avalonia.Fonts.Inter.csproj" />
-    <ProjectReference Include="$(AVALONIA_ROOT)/src/Avalonia.ReactiveUI/Avalonia.ReactiveUI.csproj" />
-    <ProjectReference Include="$(AVALONIA_ROOT)/src/Avalonia.Diagnostics/Avalonia.Diagnostics.csproj" />-->
+    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="11.0.4" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
+    <!--<ProjectReference Include="../.modules/Avalonia\packages\Avalonia\Avalonia.csproj" />
+    <PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="11.0.4" />
+    <ProjectReference Include="../.modules/Avalonia/src/Avalonia.Themes.Fluent/Avalonia.Themes.Fluent.csproj" />
+    <ProjectReference Include="../.modules/Avalonia/src/Avalonia.Fonts.Inter/Avalonia.Fonts.Inter.csproj" />
+    <ProjectReference Include="../.modules/Avalonia/src/Avalonia.ReactiveUI/Avalonia.ReactiveUI.csproj" />
+    <ProjectReference Include="../.modules/Avalonia/src/Avalonia.Diagnostics/Avalonia.Diagnostics.csproj" />-->
   </ItemGroup>
 
   <!-- Generate the Resources.Designer.cs file necessary for localizations to work -->
@@ -41,8 +44,16 @@
       <StronglyTypedClassName>%(FileName)</StronglyTypedClassName>
     </EmbeddedResource>
   </ItemGroup>
+
+  <!--<ItemGroup Condition="'$(IncludeAvaloniaGenerators)' == 'true'">
+    <ProjectReference
+      Include="../.modules/Avalonia/src/tools/Avalonia.Generators/Avalonia.Generators.csproj"
+      OutputItemType="Analyzer"
+      ReferenceOutputAssembly="false"
+      PrivateAssets="all" />
+  </ItemGroup>
   
-  <!--<Import Project="$(AVALONIA_ROOT)/build/BuildTargets.targets" />
-  <Import Project="$(AVALONIA_ROOT)/build/SourceGenerators.props" />
-  <Import Project="$(AVALONIA_ROOT)/build/ReferenceCoreLibraries.props" />-->
+  <Import Project="../.modules/Avalonia/build/BuildTargets.targets" />
+  <Import Project="../.modules/Avalonia/build/SourceGenerators.props" />
+  <Import Project="../.modules/Avalonia/build/ReferenceCoreLibraries.props" />-->
 </Project>

@@ -1,0 +1,23 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:locals="clr-namespace:ColorTiles.ViewModels.Controls"
+             xmlns:vm="clr-namespace:ColorTiles.ViewModels.Controls"
+             mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
+             x:Class="ColorTiles.Views.Controls.GameBoard"
+             x:DataType="vm:GameBoardViewModel">
+
+    <Design.DataContext>
+        <vm:GameBoardViewModel />
+    </Design.DataContext>
+
+    <ItemsRepeater ItemsSource="{Binding ColorTiles}">
+        <ItemsRepeater.ItemTemplate>
+            <DataTemplate>
+                <Image Source="{Binding Image}" />
+            </DataTemplate>
+        </ItemsRepeater.ItemTemplate>
+    </ItemsRepeater>
+
+</UserControl>

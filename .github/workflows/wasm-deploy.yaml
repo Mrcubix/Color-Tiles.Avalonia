@@ -1,8 +1,9 @@
 name: Deploy Avalonia WASM app to Github Page
-#env:
-#  PUBLISH_DIR: build/browser
+env:
+  PUBLISH_DIR: 'build/browser'
 
 # Control when the action will run. Trigger the workflow on push or pull request on master branch where the 'ColorTiles' & 'ColorTiles.Browser' folders are modified
+on:
   push:
     branches: [ master ]
     paths:
@@ -33,8 +34,8 @@ jobs:
         run: dotnet publish Color-Tiles.Browser -c Release -o ${{ env.PUBLISH_DIR }}
 
       - name: Deploy to Github Page
-        uses: JamesIves/github-pages-deploy-action@4.4.3
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+          token: ${{ secrets.PUBLISH_TOKEN }}
           branch: gh-pages
           folder: ${{ env.PUBLISH_DIR }}

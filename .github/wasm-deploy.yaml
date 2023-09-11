@@ -38,5 +38,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
           branch: gh-pages
           folder: ${{ env.PUBLISH_DIR }}
-```
-

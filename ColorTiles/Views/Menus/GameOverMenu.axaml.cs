@@ -1,10 +1,10 @@
 using System;
-using Avalonia.Controls;
 using ColorTiles.ViewModels.Menus;
+using ColorTiles.Views.Controls;
 
 namespace ColorTiles.Views.Menus;
 
-public partial class GameOverMenu : UserControl
+public partial class GameOverMenu : ToggleableControl
 {
     public event EventHandler? PlayAgainButtonClicked;
     public event EventHandler? QuitButtonClicked;
@@ -36,18 +36,6 @@ public partial class GameOverMenu : UserControl
             viewModel.PlayAgainButtonClicked += OnPlayAgainButtonClicked;
             viewModel.QuitButtonClicked += OnQuitButtonClicked;
         }
-    }
-
-    public void Show()
-    {
-        IsVisible = true;
-        IsEnabled = true;
-    }
-
-    public void Hide()
-    {
-        IsVisible = false;
-        IsEnabled = false;
     }
 
     #region Event Handlers

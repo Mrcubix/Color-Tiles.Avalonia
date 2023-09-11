@@ -3,9 +3,9 @@ using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using ColorTiles.Entities.Tilesets;
-using ColorTiles.Entities.Tools;
 using ColorTiles.ViewModels.Controls;
 using ColorTiles.ViewModels.Menus;
+using ReactiveUI;
 
 namespace ColorTiles.ViewModels;
 
@@ -13,36 +13,101 @@ public class MainViewModel : ViewModelBase
 {
     private const string ASSET_LOCATION = "avares://ColorTiles/Assets";
 
-    //public TileSetManager TileSetManager { get; set; }
-    public ColorTileSet Tileset { get; set; }
+    private HUDViewModel _hudViewModel = null!;
+    private GameBoardViewModel _gameBoardViewModel = null!;
+    private MainMenuViewModel _mainMenuViewModel = null!;
+    private GameOverMenuViewModel _gameOverMenuViewModel = null!;
 
-    public GameBoardViewModel GameBoardViewModel { get; set; }
-    public MainMenuViewModel MainMenuViewModel { get; set; }
-    public GameOverMenuViewModel GameOverMenuViewModel { get; set; }
+    
+
+    //public TileSetManager TileSetManager { get; set; }
+    public GameTileSet Tileset { get; set; }
+
+    public HUDViewModel HUDViewModel
+    {
+        get => _hudViewModel;
+        set => this.RaiseAndSetIfChanged(ref _hudViewModel, value);
+    }
+
+    public GameBoardViewModel GameBoardViewModel
+    {
+        get => _gameBoardViewModel;
+        set => this.RaiseAndSetIfChanged(ref _gameBoardViewModel, value);
+    }
+
+    public MainMenuViewModel MainMenuViewModel
+    {
+        get => _mainMenuViewModel;
+        set => this.RaiseAndSetIfChanged(ref _mainMenuViewModel, value);
+    }
+
+    public GameOverMenuViewModel GameOverMenuViewModel
+    {
+        get => _gameOverMenuViewModel;
+        set => this.RaiseAndSetIfChanged(ref _gameOverMenuViewModel, value);
+    }
+
+    #region Initialization
 
     public MainViewModel()
     {
         //TileSetManager = new TileSetManager();
         Tileset = null!;
 
-        Initialize();
-
-        GameBoardViewModel = new GameBoardViewModel();
         MainMenuViewModel = new MainMenuViewModel();
         GameOverMenuViewModel = new GameOverMenuViewModel();
+
+        HUDViewModel = null!;
+        GameBoardViewModel = null!;
+
+        Initialize();
+        PostInitialize();
     }
 
-    private void Initialize()
+    protected virtual void Initialize()
     {
-        if (!TryLoadImageAsset("Tilesets/Color-Tiles.png", out IImage? image))
+        LoadTileset("Tilesets/Color-Tiles.png");
+        InitializeViewModels();
+    }
+
+    private void LoadTileset(string path)
+    {
+        // later on we might add support for custom tilesets
+        if (!TryLoadImageAsset(path, out IImage? image))
         {
             throw new Exception("Failed to load image asset.");
         }
 
-        Tileset = new(0, image!);
-
-        //TileSetManager.AddTileSet(tileset);
+        Tileset = new DefaultTileSet(0, image!);
     }
+
+    private void InitializeViewModels()
+    {
+        HUDViewModel = new HUDViewModel(120, 10000);
+        GameBoardViewModel = new GameBoardViewModel(Tileset, 23, 15, 20);
+    }
+
+    protected virtual void PostInitialize()
+    {
+        SubscribeToEvents();
+    }
+
+    private void SubscribeToEvents()
+    {
+        MainMenuViewModel.PlayButtonClicked += OnPlayButtonClicked;
+
+        GameOverMenuViewModel.PlayAgainButtonClicked += OnPlayAgainButtonClicked;
+
+        HUDViewModel.ResetButtonClicked += OnResetButtonClicked;
+
+        GameBoardViewModel.MatchesFound += HUDViewModel.OnMatchFround;
+        GameBoardViewModel.OnPenalty += OnPenalty;
+        HUDViewModel.TimerBar.TimeExpired += OnTimeExpired;
+    }
+
+    #endregion
+
+    #region Tools
 
     private bool TryLoadImageAsset(string path, out IImage? output)
     {
@@ -58,4 +123,74 @@ public class MainViewModel : ViewModelBase
             return false;
         }
     }
+
+    #endregion
+
+    public bool ShowHUD()
+    {
+        if (!HUDViewModel.DoShowHUD)
+        {
+            HUDViewModel.DoShowHUD = true;
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool HideHUD()
+    {
+        if (HUDViewModel.DoShowHUD)
+        {
+            HUDViewModel.DoShowHUD = false;
+            return true;
+        }
+
+        return false;
+    }
+
+    #region Event handlers
+
+    private void OnPlayButtonClicked(object? sender, EventArgs e)
+    {
+        HUDViewModel.Score = 0;
+
+        // Reset the game board
+        GameBoardViewModel.InitializeEmptyBoard();
+        GameBoardViewModel.GenerateBoard();
+
+        // Show the HUD
+        ShowHUD();
+        HUDViewModel.TimerBar.StartTimer();
+    }
+
+    private void OnPlayAgainButtonClicked(object? sender, EventArgs e)
+    {
+        // Reset the game board
+        GameBoardViewModel.InitializeEmptyBoard();
+
+        HUDViewModel.TimerBar.ResetTimer();
+    }
+
+    private void OnResetButtonClicked(object? sender, EventArgs e)
+    {
+        GameBoardViewModel.InitializeEmptyBoard();
+
+        HUDViewModel.TimerBar.ResetTimer();
+    }
+
+    public void OnPenalty(object? sender, EventArgs e)
+    {
+        HUDViewModel.TimerBar.InflictPenalty(HUDViewModel.Penalty);
+
+#if DEBUG
+        Console.WriteLine($"Penalty inflicted: {HUDViewModel.Penalty}");
+#endif
+    }
+
+    public void OnTimeExpired(object? sender, EventArgs e)
+    {
+        GameOverMenuViewModel.Score = HUDViewModel.Score;
+    }
+
+    #endregion
 }

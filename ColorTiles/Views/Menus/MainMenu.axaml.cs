@@ -1,12 +1,10 @@
 using System;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
 using ColorTiles.ViewModels.Menus;
+using ColorTiles.Views.Controls;
 
 namespace ColorTiles.Views.Menus
 {
-    public partial class MainMenu : UserControl
+    public partial class MainMenu : ToggleableControl
     {
         public event EventHandler? PlayButtonClicked;
 
@@ -33,18 +31,6 @@ namespace ColorTiles.Views.Menus
             {
                 viewModel.PlayButtonClicked += OnPlayButtonClicked;
             }
-        }
-
-        public void Show()
-        {
-            IsVisible = true;
-            IsEnabled = true;
-        }
-
-        public void Hide()
-        {
-            IsVisible = false;
-            IsEnabled = false;
         }
 
         public void OnPlayButtonClicked(object? sender, EventArgs e)

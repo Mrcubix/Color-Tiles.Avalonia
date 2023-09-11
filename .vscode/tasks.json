@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "build-desktop",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -14,12 +14,27 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "publish",
+            "label": "run-debug-android",
             "command": "dotnet",
             "type": "process",
             "args": [
-                "publish",
-                "ColorTiles.Desktop",
+                "build",
+                "ColorTiles.Android",
+                "-t:Run",
+                "-p:TargetFramework=net7.0-android",
+                "-p:Configuration=Debug",
+                "-p:AndroidAttachDebugger=true",
+                "-p:AndroidSdbHostPort=10000"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build-browser",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "ColorTiles.Browser",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

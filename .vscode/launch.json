@@ -8,7 +8,7 @@
             "name": ".NET Core Launch (console)",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "build-desktop",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/ColorTiles.Desktop/bin/Debug/net7.0/ColorTiles.Desktop.dll",
             "args": [],
@@ -21,6 +21,42 @@
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach"
+        },
+        {
+            "name": "Debug - Android",
+            "type": "mono",
+            "preLaunchTask": "run-debug-android",
+            "request": "attach",
+                "address": "localhost",
+                "port": 10000
+        },
+        {
+            "name": "Attach - Android",
+            "type": "mono",
+            "request": "attach",
+            "address": "localhost",
+            "port": 10000
+        },
+        {
+            "name": "Debug - Browser",
+            "type": "blazorwasm",
+            "request": "launch",
+            "preLaunchTask": "build-browser",
+            "cwd": "${workspaceFolder}/ColorTiles.Browser",
+        },
+        {
+            "name": "Watch - Browser",
+            "type": "blazorwasm",
+            "request": "launch",
+            "preLaunchTask": "watch",
+            "cwd": "${workspaceFolder}/ColorTiles.Browser",
+            "url": "http://localhost:5001"
+        },
+        {
+            "name": "Attach - Browser",
+            "type": "blazorwasm",
+            "request": "attach",
+            "url": "http://localhost:5001"
         }
     ]
 }

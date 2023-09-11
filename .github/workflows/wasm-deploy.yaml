@@ -31,7 +31,7 @@ jobs:
         run: dotnet workload install wasm-tools
 
       - name: Publish
-        run: dotnet publish Color-Tiles.Browser -c Release -o ${{ env.PUBLISH_DIR }}
+        run: dotnet publish ColorTiles.Browser -c Release -o ${{ env.PUBLISH_DIR }}
 
       - name: Deploy to Github Page
         uses: JamesIves/github-pages-deploy-action@v4

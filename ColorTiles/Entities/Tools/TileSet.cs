@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Numerics;
 using Avalonia;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
+using ReactiveUI;
 
 namespace ColorTiles.Entities.Tools
 {
-    public class TileSet
+    public class TileSet : ReactiveObject, IDisposable
     {
         public int ID { get; set; }
         public IImage TilesetBitmap { get; set; }
@@ -68,6 +68,5 @@ namespace ColorTiles.Entities.Tools
 
             (TilesetBitmap as IDisposable)?.Dispose();
         }
-
     }
 }

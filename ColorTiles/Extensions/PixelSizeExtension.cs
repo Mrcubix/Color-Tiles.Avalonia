@@ -14,6 +14,11 @@ public static class PixelSizeExtension
         return new PixelSize((int)(size.Width * multiplier.Width), (int)(size.Height * multiplier.Height));
     }
 
+    public static Size MultiplyToSize(this PixelSize size, Size multiplier)
+    {
+        return new Size(size.Width * multiplier.Width, size.Height * multiplier.Height);
+    }
+
     public static PixelSize Divide(this PixelSize size, PixelSize divider)
     {
         return new PixelSize(size.Width / divider.Width, size.Height / divider.Height);
@@ -22,5 +27,10 @@ public static class PixelSizeExtension
     public static PixelSize Divide(this PixelSize size, Size divider)
     {
         return new PixelSize((int)(size.Width / divider.Width), (int)(size.Height / divider.Height));
+    }
+
+    public static Size DivideToSize(this PixelSize size, Size divider)
+    {
+        return new Size(size.Width / divider.Width, size.Height / divider.Height);
     }
 }

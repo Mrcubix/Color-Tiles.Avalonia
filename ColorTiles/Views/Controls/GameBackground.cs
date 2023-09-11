@@ -9,7 +9,7 @@ namespace ColorTiles.Views.Controls;
 
 public partial class GameBackground : Image
 {
-    public static readonly StyledProperty<ColorTileSet> TilesetProperty = AvaloniaProperty.Register<GameBackground, ColorTileSet>(nameof(Tileset));
+    public static readonly StyledProperty<GameTileSet> TilesetProperty = AvaloniaProperty.Register<GameBackground, GameTileSet>(nameof(Tileset));
 
     public static readonly StyledProperty<PixelSize> SizeProperty = AvaloniaProperty.Register<GameBackground, PixelSize>(nameof(Size), new PixelSize(1280, 720));
 
@@ -17,7 +17,7 @@ public partial class GameBackground : Image
 
     public static readonly StyledProperty<Size> ZoomProperty = AvaloniaProperty.Register<GameBackground, Size>(nameof(Zoom), new Size(0.9, 0.9));
 
-    public ColorTileSet Tileset
+    public GameTileSet Tileset
     {
         get => GetValue(TilesetProperty);
         set => SetValue(TilesetProperty, value);
@@ -46,7 +46,7 @@ public partial class GameBackground : Image
 
     public GameBackground()
     {
-        InitializeComponent();
+        //InitializeComponent();
 
         Stretch = Stretch.Fill;
         StretchDirection = StretchDirection.Both;
@@ -67,7 +67,7 @@ public partial class GameBackground : Image
         Rect sourceRect = new(0, 0, textureResolution.Width, textureResolution.Height);
 
         // This variable is used to alternate between drawing the light and dark background tiles
-        bool drawLightTile = false;
+        bool drawLightTile = true;
 
         if (Background == null)
             return;

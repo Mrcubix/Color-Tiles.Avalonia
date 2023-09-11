@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:locals="clr-namespace:ColorTiles.Assets.Localizations"
+             xmlns:hud="clr-namespace:ColorTiles.Views.Controls.HUD"
+             xmlns:vm="clr-namespace:ColorTiles.ViewModels.Controls"
+             mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
+             x:Class="ColorTiles.Views.Controls.HUDControl"
+             x:DataType="vm:HUDViewModel">
+
+    <Design.DataContext>
+        <vm:HUDViewModel />
+    </Design.DataContext>
+
+    <UserControl.Styles>
+        <Style Selector="TextBlock">
+            <Setter Property="TextAlignment" Value="Center" />
+            <!-- Fonts -->
+            <Setter Property="FontFamily" Value="'Roboto', 'Arial', 'Consolas', 'Sans-Serif'" />
+        </Style>
+
+        <!-- Set Background to #1FD21F on hover-->
+        <Style Selector="Button#ResetButton:pointerover ContentPresenter">
+            <Setter Property="Background" Value="#1FD21F" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid ColumnDefinitions="*,*">
+        <hud:TimerBar DataContext="{Binding TimerBar}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="0" />
+        <TextBlock Text="{Binding Score}" VerticalAlignment="Top" HorizontalAlignment="Right" TextAlignment="Right" FontSize="30" Foreground="Red"
+                   Margin="4,0" Padding="{Binding TextPadding}" Grid.Column="1" />
+        <Button Command="{Binding OnResetButtonClicked}" BorderThickness="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#1FD21F" 
+                Margin="2" Padding="{Binding ButtonPadding}" CornerRadius="0" Grid.Column="1" Name="ResetButton">
+            <TextBlock Text="{x:Static locals:Resources.ResetLabel}" FontSize="32" FontWeight="Medium" 
+                       Foreground="White" TextAlignment="Center" Margin="0,0,0,8"/>
+        </Button>
+    </Grid>
+    
+</UserControl>

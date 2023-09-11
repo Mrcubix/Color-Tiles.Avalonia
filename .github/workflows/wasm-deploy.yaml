@@ -14,6 +14,13 @@ on:
     paths:
       - 'ColorTiles/**'
       - 'ColorTiles.Browser/**'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version of the app'
+        required: true
+        default: '1.0.0'
+
 
 # Job that build the app, and deploy it to Github Page (.NET 7.00.x)
 jobs:

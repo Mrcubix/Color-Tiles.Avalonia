@@ -98,7 +98,7 @@ public class MainViewModel : ViewModelBase
 
         GameOverMenuViewModel.PlayAgainButtonClicked += OnPlayAgainButtonClicked;
 
-        HUDViewModel.ResetButtonClicked += OnResetButtonClicked;
+        HUDViewModel.ResetButtonClicked += OnPlayAgainButtonClicked;
 
         GameBoardViewModel.MatchesFound += HUDViewModel.OnMatchFround;
         GameBoardViewModel.OnPenalty += OnPenalty;
@@ -111,68 +111,47 @@ public class MainViewModel : ViewModelBase
 
     private bool TryLoadImageAsset(string path, out IImage? output)
     {
-        output = null;
+        //output = null;
 
-        try
-        {
+        /*try
+        {*/
             output = new Bitmap(AssetLoader.Open(new Uri($"{ASSET_LOCATION}/{path}")));
             return true;
-        }
+        /*}
         catch (Exception)
         {
             return false;
-        }
+        }*/
     }
 
     #endregion
-
-    public bool ShowHUD()
-    {
-        if (!HUDViewModel.DoShowHUD)
-        {
-            HUDViewModel.DoShowHUD = true;
-            return true;
-        }
-
-        return false;
-    }
-
-    public bool HideHUD()
-    {
-        if (HUDViewModel.DoShowHUD)
-        {
-            HUDViewModel.DoShowHUD = false;
-            return true;
-        }
-
-        return false;
-    }
 
     #region Event handlers
 
     private void OnPlayButtonClicked(object? sender, EventArgs e)
     {
+        MainMenuViewModel.Disable();
+
         HUDViewModel.Score = 0;
 
         // Reset the game board
+        GameBoardViewModel.Enable();
         GameBoardViewModel.InitializeEmptyBoard();
         GameBoardViewModel.GenerateBoard();
 
         // Show the HUD
-        ShowHUD();
+        HUDViewModel.Enable();
         HUDViewModel.TimerBar.StartTimer();
     }
 
     private void OnPlayAgainButtonClicked(object? sender, EventArgs e)
     {
+        // show the main menu
+        MainMenuViewModel.Enable();
+
+        // Disable the board
+        GameBoardViewModel.Disable();
         // Reset the game board
-        GameBoardViewModel.InitializeEmptyBoard();
-
-        HUDViewModel.TimerBar.ResetTimer();
-    }
-
-    private void OnResetButtonClicked(object? sender, EventArgs e)
-    {
         GameBoardViewModel.InitializeEmptyBoard();
 
         HUDViewModel.TimerBar.ResetTimer();
@@ -189,7 +168,11 @@ public class MainViewModel : ViewModelBase
 
     public void OnTimeExpired(object? sender, EventArgs e)
     {
+        // Disable the board
+        GameBoardViewModel.Disable();
+
         GameOverMenuViewModel.Score = HUDViewModel.Score;
+        GameOverMenuViewModel.Enable();
     }
 
     #endregion

@@ -8,7 +8,7 @@ using ReactiveUI;
 
 namespace ColorTiles.ViewModels.Controls;
 
-public class GameBoardViewModel : ViewModelBase
+public class GameBoardViewModel : ToggleableControlViewModel
 {
     private GameTileSet? _tileset;
     private ObservableCollection<ColorTile> _board = new();
@@ -116,7 +116,6 @@ public class GameBoardViewModel : ViewModelBase
     }
 
     public Avalonia.Size ScaledTileSize { get; set; }
-    public bool IsEnabled { get; set; } = false;
 
     #region Events
 
@@ -148,6 +147,8 @@ public class GameBoardViewModel : ViewModelBase
 
         Offset = offset;
         Zoom = zoom;
+
+        Disable();
 
         _random = new Random();
 
@@ -243,6 +244,9 @@ public class GameBoardViewModel : ViewModelBase
     /// </summary>
     public void OnBoardClicked(Point relativePosition)
     {
+        if (!IsEnabled)
+            return;
+
         if (Tileset == null)
             throw new Exception("Tileset is null.");
 

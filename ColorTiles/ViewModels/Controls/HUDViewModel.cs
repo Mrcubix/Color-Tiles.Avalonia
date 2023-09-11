@@ -6,11 +6,10 @@ using ReactiveUI;
 
 namespace ColorTiles.ViewModels.Controls;
 
-public class HUDViewModel : ViewModelBase
+public class HUDViewModel : ToggleableControlViewModel
 {
     private int _score = 0;
     private long _penalty = 0;
-    private bool _doShow = false;
     private Thickness _buttonPadding;
     private Thickness _textPadding;
 
@@ -24,12 +23,6 @@ public class HUDViewModel : ViewModelBase
     {
         get => _penalty;
         set => this.RaiseAndSetIfChanged(ref _penalty, value);
-    }
-
-    public bool DoShowHUD
-    {
-        get => _doShow;
-        set => this.RaiseAndSetIfChanged(ref _doShow, value);
     }
 
     public Thickness ButtonPadding
@@ -69,6 +62,8 @@ public class HUDViewModel : ViewModelBase
             ButtonPadding = new Thickness(8, -6);
             TextPadding = new Thickness(0,-8);
         }
+
+        Disable();
     }
 
     public HUDViewModel(int initialTimeSeconds) : this((long)initialTimeSeconds * 1000) 
@@ -89,7 +84,7 @@ public class HUDViewModel : ViewModelBase
         Score = 0;
         TimerBar.ResetTimer();
 
-        DoShowHUD = false;
+        Disable();
 
         ResetButtonClicked?.Invoke(this, EventArgs.Empty);
     }
@@ -106,6 +101,6 @@ public class HUDViewModel : ViewModelBase
 
     public void OnTimeExpired(object? sender, EventArgs e)
     {
-        DoShowHUD = false;
+        Disable();
     }
 }

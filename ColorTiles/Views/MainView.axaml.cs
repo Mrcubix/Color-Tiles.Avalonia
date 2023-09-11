@@ -29,11 +29,7 @@ public partial class MainView : UserControl
 
         if (DataContext is MainViewModel viewModel)
         {
-            viewModel.GameOverMenuViewModel.PlayAgainButtonClicked -= OnReset;
             viewModel.GameOverMenuViewModel.QuitButtonClicked -= OnGameOverMenuQuitButtonClicked;
-
-            viewModel.HUDViewModel.ResetButtonClicked -= OnReset;
-            viewModel.HUDViewModel.TimerBar.TimeExpired -= OnTimeExpired;
         }
     }
 
@@ -43,26 +39,8 @@ public partial class MainView : UserControl
 
         if (DataContext is MainViewModel viewModel)
         {
-            viewModel.GameOverMenuViewModel.PlayAgainButtonClicked += OnReset;
             viewModel.GameOverMenuViewModel.QuitButtonClicked += OnGameOverMenuQuitButtonClicked;
-
-            viewModel.HUDViewModel.ResetButtonClicked += OnReset;
-            viewModel.HUDViewModel.TimerBar.TimeExpired += OnTimeExpired;
         }
-    }
-
-    /// <summary>
-    ///  This method is called when the Play Again button is clicked on the GameOverMenu. <br/>
-    ///  This method shows the MainMenu.
-    /// </summary>
-    private void OnReset(object? sender, EventArgs e)
-    {
-        MainMenuControl.Show();
-    }
-
-    private void OnTimeExpired(object? sender, EventArgs e)
-    {
-        GameOverMenuControl.Show();
     }
 
     /// <summary>

@@ -1,11 +1,11 @@
 ﻿using System;
 using Avalonia;
-using Avalonia.Platform;
+using ColorTiles.ViewModels.Controls;
 using ReactiveUI;
 
 namespace ColorTiles.ViewModels.Menus;
 
-public class GameOverMenuViewModel : ViewModelBase
+public class GameOverMenuViewModel : ToggleableControlViewModel
 {
     private int _score;
     private Thickness _padding;
@@ -33,20 +33,24 @@ public class GameOverMenuViewModel : ViewModelBase
             Padding = new Thickness(0, 4, 0, 0);
         else
             Padding = new Thickness(8, -6);
+
+        Disable();
     }
 
-    public GameOverMenuViewModel(int score)
+    public GameOverMenuViewModel(int score) : this()
     {
         Score = score;
     }
 
     public void OnPlayAgainButtonClicked()
     {
+        Disable();
         PlayAgainButtonClicked?.Invoke(this, EventArgs.Empty);
     }
 
     public void OnQuitButtonClicked()
     {
+        Disable();
         QuitButtonClicked?.Invoke(this, EventArgs.Empty);
     }
 }

@@ -1,91 +1,16 @@
 using System;
-using NativePoint = System.Drawing.Point;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Media;
-using ColorTiles.Entities;
 using ColorTiles.Extensions;
 using ColorTiles.ViewModels.Controls;
-using System.Diagnostics;
-using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 
 namespace ColorTiles.Views.Controls;
 
 public partial class GameBoard : Control
 {
-    /*public static readonly StyledProperty<GameTileSet> TilesetProperty = AvaloniaProperty.Register<GameBoard, GameTileSet>(nameof(Tileset));
-
-    public static readonly StyledProperty<int> ColumnsProperty = AvaloniaProperty.Register<GameBoard, int>(nameof(Columns), 23);
-
-    public static readonly StyledProperty<int> RowsProperty = AvaloniaProperty.Register<GameBoard, int>(nameof(Rows), 15);
-
-    public static readonly StyledProperty<int> TilesPerColorProperty = AvaloniaProperty.Register<GameBoard, int>(nameof(TilesPerColor), 20);
-
-    public static readonly StyledProperty<PixelSize> OffsetProperty = AvaloniaProperty.Register<GameBackground, PixelSize>(nameof(Offset), new PixelSize(3 * 48 + 16, 32));
-
-    public static readonly StyledProperty<Size> ZoomProperty = AvaloniaProperty.Register<GameBackground, Size>(nameof(Zoom), new Size(0.9, 0.9));
-
-    /// <summary>
-    ///   Tileset used to render the game board. <br/>
-    ///   Tiles 0 to 8 are used for the game board. <br/>
-    /// </summary>
-    public GameTileSet Tileset
-    {
-        get => GetValue(TilesetProperty);
-        set => SetValue(TilesetProperty, value);
-    }
-
-    /// <summary>
-    ///   Numbers of columns in the game board. <br/>
-    ///   Used for the array of <see cref="ColorTile"/>s and <br/>
-    ///   the final size of the image representing the content of the game board.
-    /// </summary>
-    public int Columns
-    {
-        get => GetValue(ColumnsProperty);
-        set => SetValue(ColumnsProperty, value);
-    }
-
-    /// <summary>
-    ///   Numbers of rows in the game board. <br/>
-    ///   Used for the array of <see cref="ColorTile"/>s and <br/>
-    ///   the final size of the image representing the content of the game board.
-    /// </summary>
-    public int Rows
-    {
-        get => GetValue(RowsProperty);
-        set => SetValue(RowsProperty, value);
-    }
-
-    /// <summary>
-    ///   Number of tiles per color. <br/>
-    /// </summary>
-    public int TilesPerColor
-    {
-        get => GetValue(TilesPerColorProperty);
-        set => SetValue(TilesPerColorProperty, value);
-    }
-
-    /// <summary>
-    ///   Offset of the game board. <br/>
-    /// </summary>
-    public PixelSize Offset
-    {
-        get => GetValue(OffsetProperty);
-        set => SetValue(OffsetProperty, value);
-    }
-
-    /// <summary>
-    ///   Zoom of the game board. <br/>
-    /// </summary>
-    public Size Zoom
-    {
-        get => GetValue(ZoomProperty);
-        set => SetValue(ZoomProperty, value);
-    }*/
-
     private Size _baseSize = new(1280, 720);
     private RenderTargetBitmap _blankTile = new(new PixelSize(48, 48), new Vector(96, 96));
 
@@ -93,13 +18,6 @@ public partial class GameBoard : Control
 
     public GameBoard()
     {
-    }
-
-    protected override void OnLoaded(RoutedEventArgs e)
-    {
-        base.OnLoaded(e);
-
-        //_baseSize = Bounds.Size;
     }
 
     protected override void OnDataContextBeginUpdate()
@@ -139,9 +57,6 @@ public partial class GameBoard : Control
         if (viewmodel.Board == null || viewmodel.Board.Count == 0)
             return;
 
-        if (_baseSize == default)
-            _baseSize = Bounds.Size;
-
         var textureResolution = viewmodel.Tileset.TextureResolution;
 
         var sourceRect = new Rect(0, 0, textureResolution.Width, textureResolution.Height);
@@ -170,43 +85,6 @@ public partial class GameBoard : Control
             }
         }
     }
-
-    /*protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
-    {
-        base.OnPropertyChanged(change);
-
-        if (change.Property == TilesetProperty)
-        {
-            if (DataContext is GameBoardViewModel viewModel)
-            {
-                viewModel.Tileset = Tileset;
-            }
-        }
-
-        if (change.Property == ColumnsProperty)
-        {
-            if (DataContext is GameBoardViewModel viewModel)
-            {
-                viewModel.Columns = Columns;
-            }
-        }
-
-        if (change.Property == RowsProperty)
-        {
-            if (DataContext is GameBoardViewModel viewModel)
-            {
-                viewModel.Rows = Rows;
-            }
-        }
-
-        if (change.Property == TilesPerColorProperty)
-        {
-            if (DataContext is GameBoardViewModel viewModel)
-            {
-                viewModel.TilesPerColor = TilesPerColor;
-            }
-        }
-    }*/
 
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {

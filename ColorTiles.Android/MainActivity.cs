@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Content.PM;
+using Android.OS;
 using Avalonia;
 using Avalonia.Android;
 using Avalonia.ReactiveUI;
@@ -19,5 +20,14 @@ public class MainActivity : AvaloniaMainActivity<App>
         return base.CustomizeAppBuilder(builder)
             .WithInterFont()
             .UseReactiveUI();
+    }
+
+    protected override void OnCreate(Bundle savedInstanceState)
+    {
+        // force landscape orientation
+        RequestedOrientation = ScreenOrientation.Landscape;
+        
+
+        base.OnCreate(savedInstanceState);
     }
 }

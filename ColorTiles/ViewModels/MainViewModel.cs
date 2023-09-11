@@ -66,7 +66,7 @@ public class MainViewModel : ViewModelBase
 
     protected virtual void Initialize()
     {
-        LoadTileset("Tilesets/Color-Tiles.png");
+        LoadTileset("tilesets/Color-Tiles.png");
         InitializeViewModels();
     }
 

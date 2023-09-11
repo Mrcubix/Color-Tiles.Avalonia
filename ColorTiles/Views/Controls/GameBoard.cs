@@ -93,6 +93,7 @@ public partial class GameBoard : Control
 
     public GameBoard()
     {
+        DataContext = new GameBoardViewModel();
     }
 
     protected override void OnLoaded(RoutedEventArgs e)

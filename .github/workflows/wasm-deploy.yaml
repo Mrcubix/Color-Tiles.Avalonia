@@ -1,6 +1,6 @@
 name: Deploy Avalonia WASM app to Github Page
 env:
-  PUBLISH_DIR: ColorTiles.Browser/bin/Release/net7.0/browser-wasm/
+  PUBLISH_DIR: ColorTiles.Browser/bin/Release/net7.0/browser-wasm/AppBundle
 
 # Control when the action will run. Trigger the workflow on push or pull request on master branch where the 'ColorTiles' & 'ColorTiles.Browser' folders are modified
 on:

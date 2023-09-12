@@ -14,7 +14,9 @@
           "html-path": "index.html",
           "Host": "browser"
         }
-      ]
+      ],
+      "runtimeArgs": [],
+      "mainAssembly": "ColorTiles.Browser.dll"
     },
     "configProperties": {
       "Microsoft.Extensions.DependencyInjection.VerifyOpenGenericServiceTrimmability": true,

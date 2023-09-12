@@ -44,6 +44,12 @@ jobs:
       - name: Publish
         run: dotnet publish ColorTiles.Browser -c Release
 
+      - name: Add * binary to .gitattributes
+        run: echo "* binary" >> .gitattributes
+
+      - name: Copy index to 404
+        run: cp ${{ env.PUBLISH_DIR }}/index.html ${{ env.PUBLISH_DIR }}/404.html
+
       - name: Deploy to Github Page
         uses: JamesIves/github-pages-deploy-action@v4
         with:

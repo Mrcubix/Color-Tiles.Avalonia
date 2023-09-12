@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -17,7 +18,12 @@ public partial class App : Application
     public override void OnFrameworkInitializationCompleted()
     {
         //Assets.Localizations.Resources.Culture = CultureInfo.CurrentUICulture;
-        Assets.Localizations.Resources.Culture = new CultureInfo("en-US");
+
+        // Check if culture is invariant
+        if(CultureInfo.CurrentCulture == CultureInfo.InvariantCulture)
+            Console.WriteLine("Invariant culture detected, changing localization is not supported.");
+        else
+            Assets.Localizations.Resources.Culture = new CultureInfo("en-US");
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {

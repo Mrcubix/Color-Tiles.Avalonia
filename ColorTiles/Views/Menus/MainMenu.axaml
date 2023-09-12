@@ -23,13 +23,13 @@
         </Style>
     </UserControl.Styles>
 
-    <Grid RowDefinitions="*,Auto,128,Auto,*" ColumnDefinitions="*,Auto,*" >
+    <Grid RowDefinitions="*,*,*,*,*" ColumnDefinitions="*,Auto,*" >
 
-        <Image Name="TitleImage" Source="/Assets/Sprites/Title.png" Stretch="Uniform" Grid.Row="1" Grid.Column="1" />
+        <Image Name="TitleImage" Source="/Assets/Sprites/Title.png" MaxHeight="230" Grid.Row="1" Grid.Column="1"/>
 
-        <Button Name="PlayButton" Command="{Binding OnPlayButtonClicked}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" >
+        <Button Name="PlayButton" Command="{Binding OnPlayButtonClicked}" MaxHeight="246" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Button.Content>
-                <Image Name="PlayButtonImage" Source="/Assets/Sprites/Play.png" Stretch="Uniform" Grid.Row="3" Grid.Column="1" />
+                <Image Name="PlayButtonImage" Source="/Assets/Sprites/Play.png" />
             </Button.Content>
         </Button>
         

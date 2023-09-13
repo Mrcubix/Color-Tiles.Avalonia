@@ -48,6 +48,9 @@ jobs:
       - name: Replace Base href in index.html with Color-Tiles.Avalonia
         run: sed -i 's/<base href="\/" \/>/<base href="\/${{ env.REPO_NAME }}\/" \/>/g' ${{ env.PUBLISH_DIR }}/index.html
 
+      - name: Replace {REPO_NAME_OWNER} in index.html with repo name / owner (github.repository)
+        run: sed -i 's/{REPO_NAME_OWNER}/${{ github.repository }}/g' ${{ env.PUBLISH_DIR }}/index.html
+
       - name: Add * binary to .gitattributes
         run: echo "* binary" >> .gitattributes
 

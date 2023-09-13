@@ -58,6 +58,15 @@ public class MainActivity : AvaloniaMainActivity<App>
         }
         else if (sdkInt >= 21)
         {
+            StatusBarVisibility? systemVisibility = Window!.DecorView.SystemUiVisibility;
+
+            var options = (int)systemVisibility;
+
+            options |= (int)SystemUiFlags.Fullscreen;
+            options |= (int)SystemUiFlags.LayoutStable;
+
+            Window!.DecorView.SystemUiVisibility = (StatusBarVisibility)options;
+
             Window?.AddFlags(WindowManagerFlags.LayoutNoLimits);
         }
 #pragma warning restore CA1416, CA1422

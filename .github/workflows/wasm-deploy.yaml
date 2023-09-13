@@ -2,6 +2,7 @@ name: Deploy Avalonia WASM app to Github Page
 env:
   PUBLISH_DIR: ColorTiles.Browser/bin/Release/net7.0/browser-wasm/AppBundle
   REPO_NAME: ${{ github.event.repository.name }}
+  REPO_OWNER: ${{ github.event.repository.owner.name }}
 
 # Control when the action will run. Trigger the workflow on push or pull request on master branch where the 'ColorTiles' & 'ColorTiles.Browser' folders are modified
 on:
@@ -48,8 +49,11 @@ jobs:
       - name: Replace Base href in index.html with Color-Tiles.Avalonia
         run: sed -i 's/<base href="\/" \/>/<base href="\/${{ env.REPO_NAME }}\/" \/>/g' ${{ env.PUBLISH_DIR }}/index.html
 
-      - name: Replace {REPO_NAME_OWNER} in index.html with repo name / owner (github.repository)
-        run: sed -i 's/{REPO_NAME_OWNER}/${{ github.repository }}/g' ${{ env.PUBLISH_DIR }}/index.html
+      - name: Replace {REPO_NAME} in index.html with repo name
+        run: sed -i 's/{REPO_NAME}/${{ env.REPO_NAME }}/g' ${{ env.PUBLISH_DIR }}/index.html
+
+      - name: Replace {REPO_OWNER} in index.html with repo owner
+        run: sed -i 's/{REPO_OWNER}/${{ env.REPO_OWNER }}/g' ${{ env.PUBLISH_DIR }}/index.html
 
       - name: Add * binary to .gitattributes
         run: echo "* binary" >> .gitattributes

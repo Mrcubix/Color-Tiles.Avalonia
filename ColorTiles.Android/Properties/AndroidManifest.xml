@@ -3,6 +3,7 @@
 	<uses-permission android:name="android.permission.INTERNET" />
 	<application android:label="Color Tiles" 
 				 android:icon="@drawable/Icon" 
-				 android:screenOrientation="landscape" 
-				 android:configChanges="orientation|keyboardHidden" />
+				 android:screenOrientation="sensorLandscape" 
+				 android:configChanges="orientation|keyboardHidden"
+				 android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
 </manifest>

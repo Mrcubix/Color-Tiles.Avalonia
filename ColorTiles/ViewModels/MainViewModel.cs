@@ -67,10 +67,6 @@ public class MainViewModel : ViewModelBase
 
     protected virtual void Initialize()
     {
-        // Workaround for Linux Desktop bug, an exception occur if the t in Tilesets is not lowercase even if it doesn't match the real path
-        if (OperatingSystem.IsLinux())
-            AssetLocationRelativeDefaultTilesetPath = "tilesets/Color-Tiles.png";
-
         LoadTileset(AssetLocationRelativeDefaultTilesetPath);
         InitializeViewModels();
     }

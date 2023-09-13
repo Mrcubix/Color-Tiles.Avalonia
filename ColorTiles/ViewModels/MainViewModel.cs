@@ -17,6 +17,7 @@ public class MainViewModel : ViewModelBase
     private GameBoardViewModel _gameBoardViewModel = null!;
     private MainMenuViewModel _mainMenuViewModel = null!;
     private GameOverMenuViewModel _gameOverMenuViewModel = null!;
+    private string AssetLocationRelativeDefaultTilesetPath = "Tilesets/Color-Tiles.png";
 
     
 
@@ -66,7 +67,11 @@ public class MainViewModel : ViewModelBase
 
     protected virtual void Initialize()
     {
-        LoadTileset("Tilesets/Color-Tiles.png");
+        // Workaround for Linux Desktop bug, an exception occur if the t in Tilesets is not lowercase even if it doesn't match the real path
+        if (OperatingSystem.IsLinux())
+            AssetLocationRelativeDefaultTilesetPath = "/tilesets/Color-Tiles.png";
+
+        LoadTileset(AssetLocationRelativeDefaultTilesetPath);
         InitializeViewModels();
     }
 

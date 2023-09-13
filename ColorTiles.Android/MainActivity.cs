@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Content.PM;
+using Android.Graphics;
 using Android.OS;
 using Android.Views;
 using AndroidX.Core.View;
@@ -57,21 +58,7 @@ public class MainActivity : AvaloniaMainActivity<App>
         }
         else if (sdkInt >= 21)
         {
-            WindowCompat.SetDecorFitsSystemWindows(Window, false);
-
-            StatusBarVisibility? systemVisibility = Window?.DecorView.SystemUiVisibility;
-
-            if (systemVisibility != null)
-            {
-                var options = (int)systemVisibility;
-
-                options |= (int)SystemUiFlags.Fullscreen;
-
-                Window!.DecorView.SystemUiVisibility = (StatusBarVisibility)options;
-            }
-
-            var layoutNoLimitsFlag = WindowManagerFlags.LayoutNoLimits;
-            Window?.SetFlags(layoutNoLimitsFlag, layoutNoLimitsFlag);
+            Window?.AddFlags(WindowManagerFlags.LayoutNoLimits);
         }
 #pragma warning restore CA1416, CA1422
     }

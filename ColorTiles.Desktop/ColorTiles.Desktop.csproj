@@ -17,13 +17,9 @@
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
-    <!--<ProjectReference Include="../.modules/Avalonia/src/Avalonia.Desktop/Avalonia.Desktop.csproj" />
-    <ProjectReference Include="../.modules/Avalonia/src/Avalonia.Diagnostics/Avalonia.Diagnostics.csproj" />-->
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="../ColorTiles/ColorTiles.csproj" />
   </ItemGroup>
-
-  <!--<Import Project="../.modules/Avalonia/build/ReferenceCoreLibraries.props" />-->
 </Project>

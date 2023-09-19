@@ -49,6 +49,11 @@ public partial class MainView : UserControl
     /// </summary>
     private void OnGameOverMenuQuitButtonClicked(object? sender, EventArgs e)
     {
+        if (DataContext is MainViewModel viewModel)
+        {
+            viewModel.Dispose();
+        }
+
         _window?.Close();
     }
 }

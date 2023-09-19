@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
+    <RuntimeIdentifiers>win-x86;win-x64;win-arm64;linux-x64;linux-arm;linux-arm64;osx-x64</RuntimeIdentifiers>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
@@ -45,20 +46,25 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <!-- Include OpenAL DLL in lib folder -->
-  <ItemGroup>
-    <EmbeddedResource Include="native/win-x64/openal32.dll">
-      <Link>runtimes/win-x64/native/openal32.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Pack>true</Pack>
-    </EmbeddedResource>
+  <PropertyGroup>
 
-    <EmbeddedResource Include="native/win-x86/openal32.dll">
-      <Link>runtimes/win-x86/native/openal32.dll</Link>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <_NativeFile Include="$(MSBuildThisFileDirectory)native/win-x86/openal32.dll" Condition="'$(RuntimeIdentifier)' != 'win-x64'">
+      <Dir Condition="$(IDELaunch) == 'true'">runtimes/win-x86/native/</Dir>
+      <Dir Condition="$(IDELaunch) != 'true'"></Dir>
+    </_NativeFile>
+    <_NativeFile Include="$(MSBuildThisFileDirectory)native/win-x64/openal32.dll" Condition="'$(RuntimeIdentifier)' != 'win-x86'">
+      <Dir Condition="$(IDELaunch) == 'true'">runtimes/win-x64/native/</Dir>
+      <Dir Condition="$(IDELaunch) != 'true'"></Dir>
+    </_NativeFile>
+
+    <None Include="@(_NativeFile)">
+      <Link>%(Dir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Pack>true</Pack>
-    </EmbeddedResource>
+    </None>
   </ItemGroup>
     
-
 </Project>

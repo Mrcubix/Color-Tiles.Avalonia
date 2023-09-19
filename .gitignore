@@ -452,7 +452,8 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-ColorTiles/Assets/Localizations/*.json
+
 .modules
 TODO.md
 build
+BrowserJavascriptExtension.cs

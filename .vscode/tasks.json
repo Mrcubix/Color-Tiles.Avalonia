@@ -9,7 +9,8 @@
                 "build",
                 "ColorTiles.Desktop",
                 "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
+                "/property:IDELaunch=true",
+                "/consoleloggerparameters:NoSummary",
             ],
             "problemMatcher": "$msCompile"
         },

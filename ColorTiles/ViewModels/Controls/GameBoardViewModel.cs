@@ -8,7 +8,7 @@ using ReactiveUI;
 
 namespace ColorTiles.ViewModels.Controls;
 
-public class GameBoardViewModel : ToggleableControlViewModel
+public class GameBoardViewModel : ToggleableControlViewModel, IDisposable
 {
     private GameTileSet? _tileset;
     private ObservableCollection<ColorTile> _board = new();
@@ -420,4 +420,13 @@ public class GameBoardViewModel : ToggleableControlViewModel
     private int ConvertToIndex(Point position) => ConvertToIndex(position.X, position.Y);
 
     #endregion
+
+    public void Dispose()
+    {
+        DimensionsChanged -= OnDimensionsChanged;
+        OnPenalty = null!;
+        MatchesFound = null!;
+
+        Board.Clear();
+    }
 }

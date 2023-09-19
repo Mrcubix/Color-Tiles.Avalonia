@@ -41,6 +41,9 @@ namespace ColorTiles.Entities.Tools
 
         private void Initialize()
         {
+            if (TilesetBitmap == null)
+                return;
+
             for (int y = 0; y < TilesetBitmap.Size.Height; y += (TextureResolution.Height + Separation.Height))
             {
                 for (int x = 0; x < TilesetBitmap.Size.Width; x += (TextureResolution.Width + Separation.Width))

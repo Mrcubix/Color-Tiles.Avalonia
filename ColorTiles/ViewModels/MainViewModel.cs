@@ -1,8 +1,7 @@
 ﻿using System;
-using Avalonia.Media;
-using Avalonia.Media.Imaging;
-using Avalonia.Platform;
 using ColorTiles.Entities.Tilesets;
+using ColorTiles.Entities.Tools;
+using ColorTiles.Entities.Tools.Managers;
 using ColorTiles.ViewModels.Controls;
 using ColorTiles.ViewModels.Menus;
 using ReactiveUI;
@@ -11,18 +10,16 @@ namespace ColorTiles.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {
-    private const string ASSET_LOCATION = "avares://ColorTiles/Assets";
-
     private HUDViewModel _hudViewModel = null!;
     private GameBoardViewModel _gameBoardViewModel = null!;
     private MainMenuViewModel _mainMenuViewModel = null!;
     private GameOverMenuViewModel _gameOverMenuViewModel = null!;
-    private string AssetLocationRelativeDefaultTilesetPath = "Tilesets/Color-Tiles.png";
 
-    
+    private TileSetManager TilesetManager { get; set; } = null!;
+    private AudioSetManager AudiosetManager { get; set; } = null!;
 
-    //public TileSetManager TileSetManager { get; set; }
     public GameTileSet Tileset { get; set; }
+    public AudioSet? Audioset { get; set; } = null!;
 
     public HUDViewModel HUDViewModel
     {
@@ -52,7 +49,9 @@ public class MainViewModel : ViewModelBase
 
     public MainViewModel()
     {
-        //TileSetManager = new TileSetManager();
+        TilesetManager = new TileSetManager();
+        AudiosetManager = new AudioSetManager();
+
         Tileset = null!;
 
         MainMenuViewModel = new MainMenuViewModel();
@@ -67,19 +66,17 @@ public class MainViewModel : ViewModelBase
 
     protected virtual void Initialize()
     {
-        LoadTileset(AssetLocationRelativeDefaultTilesetPath);
-        InitializeViewModels();
-    }
+        Tileset = TilesetManager.LoadDefault();
 
-    private void LoadTileset(string path)
-    {
-        // later on we might add support for custom tilesets
-        if (!TryLoadImageAsset(path, out IImage? image))
+        // Only supported on Desktop platforms at the moment (Issue need to be fixed in OpenTK to Detect Android & IOS properly)
+        if (OperatingSystem.IsWindows() || OperatingSystem.IsLinux() || OperatingSystem.IsMacOS())
         {
-            throw new Exception("Failed to load image asset.");
+            // Initialize the audio device
+            AudiosetManager.InitializeAudio();
+            Audioset = AudiosetManager.LoadDefault();
         }
 
-        Tileset = new DefaultTileSet(0, image!);
+        InitializeViewModels();
     }
 
     private void InitializeViewModels()
@@ -102,27 +99,9 @@ public class MainViewModel : ViewModelBase
         HUDViewModel.ResetButtonClicked += OnPlayAgainButtonClicked;
 
         GameBoardViewModel.MatchesFound += HUDViewModel.OnMatchFround;
+        GameBoardViewModel.MatchesFound += OnMatchFound;
         GameBoardViewModel.OnPenalty += OnPenalty;
         HUDViewModel.TimerBar.TimeExpired += OnTimeExpired;
-    }
-
-    #endregion
-
-    #region Tools
-
-    private bool TryLoadImageAsset(string path, out IImage? output)
-    {
-        //output = null;
-
-        /*try
-        {*/
-            output = new Bitmap(AssetLoader.Open(new Uri($"{ASSET_LOCATION}/{path}")));
-            return true;
-        /*}
-        catch (Exception)
-        {
-            return false;
-        }*/
     }
 
     #endregion
@@ -131,6 +110,8 @@ public class MainViewModel : ViewModelBase
 
     private void OnPlayButtonClicked(object? sender, EventArgs e)
     {
+        Audioset?.ButtonClickSFX.Play();
+
         MainMenuViewModel.Disable();
 
         HUDViewModel.Score = 0;
@@ -147,6 +128,9 @@ public class MainViewModel : ViewModelBase
 
     private void OnPlayAgainButtonClicked(object? sender, EventArgs e)
     {
+        // Play the button click SFX
+        Audioset?.ButtonClickSFX.Play();
+
         // show the main menu
         MainMenuViewModel.Enable();
 
@@ -160,11 +144,20 @@ public class MainViewModel : ViewModelBase
 
     public void OnPenalty(object? sender, EventArgs e)
     {
+        // Play the penalty SFX
+        Audioset?.PenaltySFX?.Play();
+
         HUDViewModel.TimerBar.InflictPenalty(HUDViewModel.Penalty);
 
 #if DEBUG
         Console.WriteLine($"Penalty inflicted: {HUDViewModel.Penalty}");
 #endif
+    }
+
+    public void OnMatchFound(object? sender, int e)
+    {
+        // Play the match found SFX
+        Audioset?.MatchSFX?.Play();
     }
 
     public void OnTimeExpired(object? sender, EventArgs e)
@@ -174,6 +167,36 @@ public class MainViewModel : ViewModelBase
 
         GameOverMenuViewModel.Score = HUDViewModel.Score;
         GameOverMenuViewModel.Enable();
+    }
+
+    #endregion
+
+    #region Disposal
+
+    public void Dispose()
+    {
+        UnsuscribeFromEvents();
+
+        // Dispose Image Side
+        TilesetManager.Dispose();
+        // Dispose Audio Side
+        AudiosetManager.Dispose();
+
+        GameBoardViewModel.Dispose();
+    }
+
+    public void UnsuscribeFromEvents()
+    {
+        MainMenuViewModel.PlayButtonClicked -= OnPlayButtonClicked;
+
+        GameOverMenuViewModel.PlayAgainButtonClicked -= OnPlayAgainButtonClicked;
+
+        HUDViewModel.ResetButtonClicked -= OnPlayAgainButtonClicked;
+
+        GameBoardViewModel.MatchesFound -= HUDViewModel.OnMatchFround;
+        GameBoardViewModel.MatchesFound -= OnMatchFound;
+        GameBoardViewModel.OnPenalty -= OnPenalty;
+        HUDViewModel.TimerBar.TimeExpired -= OnTimeExpired;
     }
 
     #endregion

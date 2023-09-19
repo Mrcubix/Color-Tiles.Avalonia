@@ -52,7 +52,7 @@ public class HUDViewModel : ToggleableControlViewModel
 
         TimerBar.TimeExpired += OnTimeExpired;
 
-        if (OperatingSystem.IsAndroid() || OperatingSystem.IsBrowser())
+        if (!OperatingSystem.IsWindows())
         {
             ButtonPadding = new Thickness(8, 4, 8, 0);
             TextPadding = new Thickness(0);

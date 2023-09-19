@@ -4,8 +4,6 @@
 
 This is a port of a clone of mine made in Godot 4 using C#, You can find the original [here](https://github.com/Mrcubix/Color-Tiles).
 
-The rest of this README is the same as the original, for now.
-
 ## Introduction
 
 This is a modern clone of the classic game Color Tiles from [en.gamesaien.com](https://en.gamesaien.com/).
@@ -14,6 +12,10 @@ This game is made in Avalonia.
 ## Dependencies
 
 - .NET 7 **Desktop Runtime**: [Link](https://dotnet.microsoft.com/en-us/download/dotnet/7.0#runtime-desktop-7.0.10:~:text=x86-,.NET%20Desktop%20Runtime,-7.0.10) | [Fallback Link](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
+
+## Play Online
+
+You can play the game online, in your browser [here](https://mrcubix.github.io/Color-Tiles.Avalonia/).
 
 ## Download
 

@@ -29,7 +29,7 @@ public class GameOverMenuViewModel : ToggleableControlViewModel
     { 
         Score = 0;
 
-        if (OperatingSystem.IsAndroid() || OperatingSystem.IsBrowser())
+        if (!OperatingSystem.IsWindows())
             Padding = new Thickness(0, 4, 0, 0);
         else
             Padding = new Thickness(8, -6);

@@ -9,6 +9,7 @@
     <!-- Enable Trim -->
     <PublishTrimmed>true</PublishTrimmed>
     <TrimMode>Link</TrimMode>
+    <!--<OpenALDir Condition="'$(DOTNET_LIBS)' != ''">$(DOTNET_LIBS)/OpenTK/src/OpenAL/OpenTK.OpenAL</OpenALDir>-->
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,6 +28,8 @@
     <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="OpenTK.OpenAL" Version="5.0.0-pre.2" />
+    <!--<ProjectReference Include="$(OpenALDir)/OpenTK.OpenAL.csproj" />-->
   </ItemGroup>
 
   <!-- Generate the Resources.Designer.cs file necessary for localizations to work -->
@@ -41,4 +44,21 @@
       <StronglyTypedClassName>%(FileName)</StronglyTypedClassName>
     </EmbeddedResource>
   </ItemGroup>
+
+  <!-- Include OpenAL DLL in lib folder -->
+  <ItemGroup>
+    <EmbeddedResource Include="native/win-x64/openal32.dll">
+      <Link>runtimes/win-x64/native/openal32.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
+    </EmbeddedResource>
+
+    <EmbeddedResource Include="native/win-x86/openal32.dll">
+      <Link>runtimes/win-x86/native/openal32.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
+    </EmbeddedResource>
+  </ItemGroup>
+    
+
 </Project>

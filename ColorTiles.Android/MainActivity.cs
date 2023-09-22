@@ -47,14 +47,14 @@ public class MainActivity : AvaloniaMainActivity<App>
         // Hide status bar on Android 11+
         if (sdkInt >= 30)
         {
-            var windowsInsetsController = Window?.InsetsController;
+            /*var windowsInsetsController = Window?.InsetsController;
 
             if (windowsInsetsController != null)
             {
                 windowsInsetsController.SystemBarsBehavior = (int)WindowInsetsControllerBehavior.ShowTransientBarsBySwipe;
 
                 windowsInsetsController.Hide(WindowInsets.Type.StatusBars());
-            }
+            }*/
         }
         else if (sdkInt >= 21)
         {

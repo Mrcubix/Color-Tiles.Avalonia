@@ -11,12 +11,6 @@
     <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
   </PropertyGroup>
 
-  <!--<ItemGroup>
-    <AndroidResource Include="Icon.png">
-      <Link>Resources\drawable\Icon.png</Link>
-    </AndroidResource>
-  </ItemGroup>-->
-
   <ItemGroup>
     <AndroidResource Include="../ColorTiles/Assets/Sprites/icon_192.png">
       <Link>Resources\drawable\Icon.png</Link>
@@ -30,5 +24,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ColorTiles\ColorTiles.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(IncludeAndroidNativeLibs) == 'true'">
+    <AndroidNativeLibrary Include="../ColorTiles/native/android/libopenal.so" Abi="armeabi-v7a" />
+    <AndroidNativeLibrary Include="../ColorTiles/native/android/libopenal.so" Abi="arm64-v8a" />
+    <AndroidNativeLibrary Include="../ColorTiles/native/android/libopenal.so" Abi="x86" />
+    <AndroidNativeLibrary Include="../ColorTiles/native/android/libopenal.so" Abi="x86_64" />
   </ItemGroup>
 </Project>

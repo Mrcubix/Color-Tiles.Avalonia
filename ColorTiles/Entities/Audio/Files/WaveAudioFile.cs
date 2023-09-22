@@ -156,14 +156,14 @@ namespace ColorTiles.Entities.Audio.Files
             AL.SourceStop(Source);
         }
 
-        private void OnInitialized()
+        protected virtual void OnInitialized()
         {
             AL.Source(Source, ALSourcef.Gain, Volume);
             AL.Source(Source, ALSourcef.Pitch, Pitch);
             AL.Source(Source, ALSourceb.Looping, DoLoop);
         }
 
-        private void OnVolumeChanged()
+        protected virtual void OnVolumeChanged()
         {
             if (HasLoaded == false)
                 return;
@@ -171,7 +171,7 @@ namespace ColorTiles.Entities.Audio.Files
             AL.Source(Source, ALSourcef.Gain, Volume);
         }
 
-        private void OnPitchChanged()
+        protected virtual void OnPitchChanged()
         {
             if (HasLoaded == false)
                 return;
@@ -179,7 +179,7 @@ namespace ColorTiles.Entities.Audio.Files
             AL.Source(Source, ALSourcef.Pitch, Pitch);
         }
 
-        private void OnLoopChanged()
+        protected virtual void OnLoopChanged()
         {
             if (HasLoaded == false)
                 return;

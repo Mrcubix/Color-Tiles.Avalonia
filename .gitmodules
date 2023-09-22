@@ -1,0 +1,3 @@
+[submodule ".modules/OpenTK"]
+	path = .modules/OpenTK
+	url = git@github.com:Mrcubix/opentk.git

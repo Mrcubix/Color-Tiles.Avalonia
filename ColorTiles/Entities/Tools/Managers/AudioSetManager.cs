@@ -87,6 +87,13 @@ public class AudioSetManager : IManager<AudioSet>
                                      reader.Read(penaltySFXStream!)!, 
                                      null!);
 
+        reader.Dispose();
+
+        buttonClickSFXStream!.Close();
+        buttonHoverSFXStream!.Close();
+        matchSFXStream!.Close();
+        penaltySFXStream!.Close();
+
         // Add the new set to the list
         Add(newSet);
 
@@ -114,14 +121,14 @@ public class AudioSetManager : IManager<AudioSet>
 
     public void InitializeAudio()
     {
-        var Device = ALC.OpenDevice(null);
+        Device = ALC.OpenDevice(null);
 
         if (Device.Handle == IntPtr.Zero)
             throw new Exception("Failed to open audio device.");
 
         var attributes = new ALContextAttributes();
 
-        var Context = ALC.CreateContext(Device, attributes);
+        Context = ALC.CreateContext(Device, attributes);
 
         if (Context.Handle == IntPtr.Zero)
             throw new Exception("Failed to create audio context.");
@@ -137,21 +144,15 @@ public class AudioSetManager : IManager<AudioSet>
     public override void Dispose()
     {
         // Dispose the audio files
-        foreach (var tileSet in AudioSets)
-        {
-            tileSet.Dispose();
-        }
+        foreach (var audioSet in AudioSets)
+            audioSet.Dispose();
 
         // Dispose the audio context
-        if (Context.Handle != IntPtr.Zero)
-        {
-            ALC.MakeContextCurrent(ALContext.Null);
-            ALC.DestroyContext(Context);
-        }
+        ALC.MakeContextCurrent(ALContext.Null); // Illegal Command gets thrown here
+        ALC.DestroyContext(Context); // Same here
 
-        // Dispose the audio device
-        if (Device.Handle != IntPtr.Zero)
-            ALC.CloseDevice(Device);
+        // Dispose the device
+        ALC.CloseDevice(Device); // Same here
     }
 
     #endregion

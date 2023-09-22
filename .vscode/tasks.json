@@ -10,6 +10,7 @@
                 "ColorTiles.Desktop",
                 "/property:GenerateFullPaths=true",
                 "/property:IDELaunch=true",
+                "/property:IncludeWindowsNativeLibs=true",
                 "/consoleloggerparameters:NoSummary",
             ],
             "problemMatcher": "$msCompile"
@@ -24,6 +25,8 @@
                 "-t:Run",
                 "-p:TargetFramework=net7.0-android",
                 "-p:Configuration=Debug",
+                "-p:IDELaunch=true",
+                "-p:IncludeAndroidNativeLibs=true",
                 "-p:AndroidAttachDebugger=true",
                 "-p:AndroidSdbHostPort=10000"
             ],

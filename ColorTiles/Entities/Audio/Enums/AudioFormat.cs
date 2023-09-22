@@ -4,5 +4,6 @@ public enum AudioFormat
 {
     Unknown = -1,
     Wave = 0,
-    Mp3 = 1
+    Mp3 = 1,
+    Raw = 2,
 }

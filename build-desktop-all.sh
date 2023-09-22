@@ -1,10 +1,12 @@
 #!/bin/bash
 
+
+
 # Windows x64
-dotnet publish ColorTiles.Desktop -c Release -r win-x64 --no-self-contained -o build/win-x64
+dotnet publish ColorTiles.Desktop -c Release -r win-x64 --no-self-contained -o build/win-x64 -p:IncludeWindowsNativeLibs=true
 
 # Windows x86
-dotnet publish ColorTiles.Desktop -c Release -r win-x86 --no-self-contained -o build/win-x86
+dotnet publish ColorTiles.Desktop -c Release -r win-x86 --no-self-contained -o build/win-x86 -p:IncludeWindowsNativeLibs=true
 
 # Linux x64
 dotnet publish ColorTiles.Desktop -c Release -r linux-x64 --no-self-contained -o build/linux-x64

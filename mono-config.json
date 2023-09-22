@@ -65,10 +65,6 @@
     },
     {
       "behavior": "assembly",
-      "name": "openal32.dll"
-    },
-    {
-      "behavior": "assembly",
       "name": "OpenTK.OpenAL.dll"
     },
     {

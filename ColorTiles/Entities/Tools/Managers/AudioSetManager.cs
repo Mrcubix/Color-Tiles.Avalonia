@@ -151,12 +151,15 @@ public class AudioSetManager : IManager<AudioSet>
         foreach (var audioSet in AudioSets)
             audioSet.Dispose();
 
-        // Dispose the audio context
-        ALC.MakeContextCurrent(ALContext.Null); // Illegal Command gets thrown here
-        ALC.DestroyContext(Context); // Same here
+        if (!OperatingSystem.IsBrowser())
+        {
+            // Dispose the audio context
+            ALC.MakeContextCurrent(ALContext.Null); // Illegal Command gets thrown here
+            ALC.DestroyContext(Context); // Same here
 
-        // Dispose the device
-        ALC.CloseDevice(Device); // Same here
+            // Dispose the device
+            ALC.CloseDevice(Device); // Same here
+        }
     }
 
     #endregion

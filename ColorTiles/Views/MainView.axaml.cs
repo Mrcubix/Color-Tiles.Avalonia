@@ -53,7 +53,8 @@ public partial class MainView : UserControl
         {
             viewModel.Dispose();
         }
-
+            
+        // TODO: might want to use DI to provide a proper implementation of quitting native to each platforms
         _window?.Close();
     }
 }

@@ -34,7 +34,7 @@ public class WaveFileReader : IAudioFileReader
         else
             stream = File.OpenRead(path);
 
-        IAudioFile file = Read(stream, false);
+        IAudioFile file = Read<WaveAudioFile>(stream, false);
 
         if (path != lastPath)
         {
@@ -45,7 +45,7 @@ public class WaveFileReader : IAudioFileReader
         return file;
     }
 
-    public IAudioFile Read(Stream stream, bool doCache = true)
+    public IAudioFile Read<T>(Stream stream, bool doCache = true) where T : IAudioFile, new()
     {
         reader = new BinaryReader(stream);
 
@@ -94,7 +94,15 @@ public class WaveFileReader : IAudioFileReader
             stream.Dispose();
         }
 
-        var file = new WaveAudioFile(buffer, channels, sampleRate, bitsPerSample);
+        var file = new T
+        {
+            Buffer = buffer,
+            Channels = channels,
+            SampleRate = sampleRate,
+            SampleSize = bitsPerSample,
+        };
+
+        file.Initialize();
 
         if (doCache)
         {

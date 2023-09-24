@@ -452,8 +452,6 @@ class AudioFile
             {
                 this.#source.start();
             }
-
-            console.log("Playing audio file " + this.id);
         }
     }
 

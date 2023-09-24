@@ -20,6 +20,7 @@ public class MainViewModel : ViewModelBase
 
     public GameTileSet Tileset { get; set; }
     public AudioSet? Audioset { get; set; } = null!;
+    public bool Disposed { get; private set; }
 
     public HUDViewModel HUDViewModel
     {
@@ -53,6 +54,25 @@ public class MainViewModel : ViewModelBase
         AudiosetManager = new AudioSetManager();
 
         Tileset = null!;
+        Audioset = null!;
+
+        MainMenuViewModel = new MainMenuViewModel();
+        GameOverMenuViewModel = new GameOverMenuViewModel();
+
+        HUDViewModel = null!;
+        GameBoardViewModel = null!;
+
+        Initialize();
+        PostInitialize();
+    }
+
+    public MainViewModel(GameTileSet tileset, AudioSet audioset)
+    {
+        TilesetManager = new TileSetManager();
+        AudiosetManager = new AudioSetManager();
+
+        Tileset = tileset;
+        Audioset = audioset;
 
         MainMenuViewModel = new MainMenuViewModel();
         GameOverMenuViewModel = new GameOverMenuViewModel();
@@ -66,15 +86,13 @@ public class MainViewModel : ViewModelBase
 
     protected virtual void Initialize()
     {
-        Tileset = TilesetManager.LoadDefault();
+        Tileset ??= TilesetManager.LoadDefault();
 
         // Only supported on Desktop platforms at the moment (Issue need to be fixed in OpenTK to Detect Android & IOS properly)
-        if (OperatingSystem.IsWindows() || OperatingSystem.IsLinux() || OperatingSystem.IsMacOS())
-        {
-            // Initialize the audio device
-            AudiosetManager.InitializeAudio();
-            Audioset = AudiosetManager.LoadDefault();
-        }
+        if (!OperatingSystem.IsBrowser())
+            AudiosetManager.InitializeOpenAL();
+
+        Audioset ??= AudiosetManager.LoadDefault();
 
         InitializeViewModels();
     }
@@ -175,6 +193,9 @@ public class MainViewModel : ViewModelBase
 
     public void Dispose()
     {
+        if (Disposed)
+            return;
+
         UnsuscribeFromEvents();
 
         // Dispose Image Side
@@ -183,6 +204,8 @@ public class MainViewModel : ViewModelBase
         AudiosetManager.Dispose();
 
         GameBoardViewModel.Dispose();
+
+        Disposed = true;
     }
 
     public void UnsuscribeFromEvents()

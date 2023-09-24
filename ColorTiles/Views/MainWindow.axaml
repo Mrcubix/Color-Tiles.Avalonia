@@ -10,5 +10,5 @@
         Icon="/Assets/Sprites/icon_192.png"
         Title="Color Tiles"
         Background="Black">
-        <views:MainView />
+        <views:MainView Name="MainViewControl" />
 </Window>

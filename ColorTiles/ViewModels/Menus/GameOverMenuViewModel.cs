@@ -50,7 +50,6 @@ public class GameOverMenuViewModel : ToggleableControlViewModel
 
     public void OnQuitButtonClicked()
     {
-        Disable();
         QuitButtonClicked?.Invoke(this, EventArgs.Empty);
     }
 }

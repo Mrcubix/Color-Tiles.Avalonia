@@ -5,6 +5,7 @@
     <WasmMainJSPath>AppBundle\main.js</WasmMainJSPath>
     <OutputType>Exe</OutputType>
     <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>

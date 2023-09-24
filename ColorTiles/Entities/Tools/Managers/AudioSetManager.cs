@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Avalonia.Platform;
+using ColorTiles.Entities.Audio.Files;
 using ColorTiles.Entities.Audio.Files.Readers;
 using OpenTK.Audio.OpenAL;
 
@@ -51,41 +52,24 @@ public class AudioSetManager : IManager<AudioSet>
 
     #region Load
 
-    public override AudioSet LoadDefault()
+    public override AudioSet LoadDefault() => LoadDefault<WaveAudioFile>();
+
+    public AudioSet LoadDefault<T>() where T : IAudioFile, new()
     {
-        if (!TryLoadAudioAsset(DefaultButtonClickSFXPath, out Stream? buttonClickSFXStream))
-        {
-            throw new Exception("Failed to load button click SFX.");
-        }
-
-        if (!TryLoadAudioAsset(DefaultButtonHoverSFXPath, out Stream? buttonHoverSFXStream))
-        {
-            throw new Exception("Failed to load button hover SFX.");
-        }
-
-        if (!TryLoadAudioAsset(DefaultMatchSFXPath, out Stream? matchSFXStream))
-        {
-            throw new Exception("Failed to load match found SFX.");
-        }
-
-        if (!TryLoadAudioAsset(DefaultPenaltySFXPath, out Stream? penaltySFXStream))
-        {
-            throw new Exception("Failed to load penalty SFX.");
-        }
-
-        /*if (!TryLoadAudioAsset(DefaultGameOverSFXPath, out Stream? gameOverSFXStream))
-        {
-            throw new Exception("Failed to load game over SFX.");
-        }*/
+        var (buttonClickSFXStream, 
+             buttonHoverSFXStream, 
+             matchSFXStream, 
+             penaltySFXStream, 
+             gameOverSFXStream) = LoadDefaultAudioStreams();
 
         // Initialize the audio files
         var reader = new WaveFileReader();
 
-        var newSet = new AudioSet(0, reader.Read(buttonClickSFXStream!)!, 
-                                     reader.Read(buttonHoverSFXStream!)!, 
-                                     reader.Read(matchSFXStream!)!,
-                                     reader.Read(penaltySFXStream!)!, 
-                                     null!);
+        AudioSet newSet = new(0, reader.Read<T>(buttonClickSFXStream!)!, 
+                                 reader.Read<T>(buttonHoverSFXStream!)!, 
+                                 reader.Read<T>(matchSFXStream!)!,
+                                 reader.Read<T>(penaltySFXStream!)!, 
+                                 null!);
 
         reader.Dispose();
 
@@ -100,7 +84,27 @@ public class AudioSetManager : IManager<AudioSet>
         return newSet;
     }
 
-    private bool TryLoadAudioAsset(string path, out Stream? output)
+    public static (Stream buttonClickSFXStream, Stream buttonHoverSFXStream, Stream matchSFXStream, Stream penaltySFXStream, Stream gameOverSFXStream) LoadDefaultAudioStreams()
+    {
+        if (!TryLoadAudioAsset(DefaultButtonClickSFXPath, out Stream? buttonClickSFXStream))
+            throw new Exception("Failed to load button click SFX.");
+
+        if (!TryLoadAudioAsset(DefaultButtonHoverSFXPath, out Stream? buttonHoverSFXStream))
+            throw new Exception("Failed to load button hover SFX.");
+
+        if (!TryLoadAudioAsset(DefaultMatchSFXPath, out Stream? matchSFXStream))
+            throw new Exception("Failed to load match found SFX.");
+
+        if (!TryLoadAudioAsset(DefaultPenaltySFXPath, out Stream? penaltySFXStream))
+            throw new Exception("Failed to load penalty SFX.");
+
+        /*if (!TryLoadAudioAsset(DefaultGameOverSFXPath, out Stream? gameOverSFXStream))
+            throw new Exception("Failed to load game over SFX.");*/
+
+        return (buttonClickSFXStream!, buttonHoverSFXStream!, matchSFXStream!, penaltySFXStream!, null!);
+    }
+
+    public static bool TryLoadAudioAsset(string path, out Stream? output)
     {
         output = null;
 
@@ -119,7 +123,7 @@ public class AudioSetManager : IManager<AudioSet>
 
     #region Audio Initialization
 
-    public void InitializeAudio()
+    public void InitializeOpenAL()
     {
         Device = ALC.OpenDevice(null);
 

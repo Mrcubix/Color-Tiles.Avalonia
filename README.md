@@ -71,14 +71,15 @@ dotnet publish ColorTiles.Desktop -c Release -r linux-x64 -p:PublishSingleFile=t
 ```
 - You can then start the game using the built Release binaries
 
-## Is there anything i can do to help? (None as of now, WIP)
+## Is there anything i can do to help? (WIP)
 
 There are a couple things that are missing, like:
 
-- Translation support, although the game should be auto-translated, it may not be of the best quality.
+- (Partially Complete) Translation support.
 Some Sprites may also need to be remade to suit these translations,
-- Some audio files are missing for whenever tiles are removed or the game is over, ideally, those should be made from scratch, nothing too complex,
+- ~~Some audio files are missing for whenever tiles are removed or the game is over, ideally, those should be made from scratch, nothing too complex~~,
 - A better icon for the game,
 - Maybe a better tileset,
+- If you have some experience in this domain, I may accept suggestions that improve the codebase,
 - ~~A reset button if you want to retry spam like ed~~   
 ![bmc](https://cdn.7tv.app/emote/643ce6a2ce9e08be709d62c1/4x.webp)

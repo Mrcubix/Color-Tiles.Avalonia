@@ -17,7 +17,7 @@ This game is made in Avalonia.
 
 You can play the game online, in your browser [here](https://mrcubix.github.io/Color-Tiles.Avalonia/).
 
-## Download
+## Download (Forwarded to Godot Version for now)
 
 You can get the latest release of the game [here](https://github.com/Mrcubix/Color-Tiles/releases/latest).
 
@@ -61,14 +61,11 @@ For MacOS users, i'm sorry but you will have to deal with Apple's Gatekeeper.
 
 - Clone this repository
 - Open the project with your terminal of choice
-- Copy the followings :
-```bash
-dotnet restore
-// Building for windows
-dotnet publish ColorTiles.Desktop -c Release -r win-x64 -p:PublishSingleFile=true
-// Building for linux
-dotnet publish ColorTiles.Desktop -c Release -r linux-x64 -p:PublishSingleFile=true
-```
+- Run :
+    - `./build-desktop-all.sh` to build the game for all desktop platforms
+    - `./build-android-all.sh` to build the game for all android platforms
+    - `dotnet publish ColorTiles.Browser -c Release` to build the game for the browser
+    - `./build-all.sh` to build the game for all platforms
 - You can then start the game using the built Release binaries
 
 ## Is there anything i can do to help? (WIP)

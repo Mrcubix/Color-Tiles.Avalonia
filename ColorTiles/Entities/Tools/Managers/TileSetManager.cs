@@ -75,7 +75,7 @@ public class TileSetManager : IManager<TileSet>
         return new T();
     }
 
-    private static bool TryLoadImageAsset(string path, out IImage? output)
+    public static bool TryLoadImageAsset(string path, out IImage? output)
     {
         output = null;
 

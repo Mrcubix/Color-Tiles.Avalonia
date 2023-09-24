@@ -43,8 +43,6 @@ namespace ColorTiles.Entities.Audio.Files
             Buffer = null!;
             Format = AudioFormat.Wave;
 
-            Initialize();
-
             Volume = 1.0f;
             Pitch = 1.0f;
             DoLoop = false;
@@ -191,8 +189,6 @@ namespace ColorTiles.Entities.Audio.Files
         {
             AL.DeleteSource(Source);
             AL.DeleteBuffer(ALBuffer);
-
-            Buffer = null!;
 
             HasLoaded = false;
         }

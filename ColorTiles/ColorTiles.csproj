@@ -28,7 +28,7 @@
     <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
     
-    <PackageReference Include="OpenTK" Version="4.8.1" />
+    <PackageReference Include="OpenTK.Audio.OpenAL" Version="4.8.1" />
   </ItemGroup>
 
   <!-- Generate the Resources.Designer.cs file necessary for localizations to work -->

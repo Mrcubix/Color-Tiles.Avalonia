@@ -9,7 +9,6 @@
     <!-- Enable Trim -->
     <PublishTrimmed>true</PublishTrimmed>
     <TrimMode>Link</TrimMode>
-    <OpenALDir Condition="'$(DOTNET_LIBS)' != ''">$(DOTNET_LIBS)/OpenTK/src/OpenAL/OpenTK.OpenAL</OpenALDir>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,10 +27,8 @@
     <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
-    <!--<ProjectReference Include="../.modules/OpenTK/src/OpenAL/OpenTK.OpenAL/OpenTK.OpenAL.csproj" />-->
-
-    <PackageReference Include="OpenTK.OpenAL" Version="5.0.0-pre.2" />
-    <!--<ProjectReference Include="$(OpenALDir)/OpenTK.OpenAL.csproj" />-->
+    
+    <PackageReference Include="OpenTK" Version="4.8.1" />
   </ItemGroup>
 
   <!-- Generate the Resources.Designer.cs file necessary for localizations to work -->

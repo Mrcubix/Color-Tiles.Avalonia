@@ -120,7 +120,7 @@ namespace ColorTiles.Entities.Audio.Files
             if (AL.GetError() != ALError.NoError)
                 throw new Exception(AL.GetErrorString(AL.GetError()));
 
-            AL.BindBufferToSource(Source, ALBuffer);
+            AL.Source(Source, ALSourcei.Buffer, ALBuffer);
 
             if (AL.GetError() != ALError.NoError)
                 throw new Exception(AL.GetErrorString(AL.GetError()));

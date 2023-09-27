@@ -65,7 +65,7 @@
     },
     {
       "behavior": "assembly",
-      "name": "OpenTK.OpenAL.dll"
+      "name": "OpenTK.Audio.OpenAL.dll"
     },
     {
       "behavior": "assembly",

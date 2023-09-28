@@ -8,6 +8,7 @@
     <IncludeAvaloniaGenerators>true</IncludeAvaloniaGenerators>
     <!-- include native libs for self extract -->
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <ApplicationIcon>../ColorTiles/Assets/Sprites/Icon_256.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup>

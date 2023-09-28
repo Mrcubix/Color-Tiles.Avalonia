@@ -7,7 +7,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         MinWidth="960" MinHeight="540" Width="1280" Height="720"
         x:Class="ColorTiles.Views.MainWindow"
-        Icon="/Assets/Sprites/icon_192.png"
+        Icon="/Assets/Sprites/icon_256.ico"
         Title="Color Tiles"
         Background="Black">
         <views:MainView Name="MainViewControl" />

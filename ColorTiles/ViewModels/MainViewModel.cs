@@ -20,6 +20,7 @@ public class MainViewModel : ViewModelBase
 
     public GameTileSet Tileset { get; set; }
     public AudioSet? Audioset { get; set; } = null!;
+
     public bool Disposed { get; private set; }
 
     public HUDViewModel HUDViewModel

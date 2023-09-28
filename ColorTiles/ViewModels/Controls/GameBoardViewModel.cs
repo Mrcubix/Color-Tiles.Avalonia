@@ -100,7 +100,7 @@ public class GameBoardViewModel : ToggleableControlViewModel, IDisposable
             this.RaiseAndSetIfChanged(ref _offset, value);
             SettingsChanged?.Invoke(this, EventArgs.Empty);
         }
-    }
+    }    
 
     /// <summary>
     ///   Zoom of the game board. <br/>
@@ -152,9 +152,10 @@ public class GameBoardViewModel : ToggleableControlViewModel, IDisposable
 
         _random = new Random();
 
-        DimensionsChanged += OnDimensionsChanged;
         OnPenalty = null!;
         MatchesFound = null!;
+
+        DimensionsChanged += OnDimensionsChanged;
 
         SettingsChanged?.Invoke(this, EventArgs.Empty);
     }

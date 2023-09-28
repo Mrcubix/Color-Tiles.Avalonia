@@ -13,11 +13,30 @@ public partial class GameBoard : Control
 {
     private Size _baseSize = new(1280, 720);
     private RenderTargetBitmap _blankTile = new(new PixelSize(48, 48), new Vector(96, 96));
+    private Size _correctedOffset = default;
+
+    
+    /// <summary>
+    ///  Corrected Offset of the game board. <br/>
+    ///  The current window scale is taken into account.
+    /// </summary>
+    private Size CorrectedOffset
+    {
+        get => _correctedOffset;
+        set
+        {
+            _correctedOffset = value;
+            OffsetChanged?.Invoke(this, value);
+        }
+    }
+
+    public event EventHandler<Size> OffsetChanged;
 
     public event EventHandler<Point>? Clicked;
 
     public GameBoard()
     {
+        OffsetChanged = null!;
     }
 
     protected override void OnDataContextBeginUpdate()
@@ -64,7 +83,8 @@ public partial class GameBoard : Control
         Size scale = Bounds.Size.Divide(_baseSize);
 
         // the offset is affected by the zoom and the current window size
-        Size CorrectedOffset = viewmodel.Zoom.Multiply(viewmodel.Offset).Multiply(scale);
+        CorrectedOffset = viewmodel.Zoom.Multiply(viewmodel.Offset).Multiply(scale);
+            
         // the size of the tile is affected by the zoom and the current window size
         Size destSize = viewmodel.Zoom.Multiply(textureResolution).Multiply(scale);
         viewmodel.ScaledTileSize = destSize;
@@ -105,8 +125,8 @@ public partial class GameBoard : Control
         {
             Size scale = Bounds.Size.Divide(_baseSize);
 
-            PixelSize correctedOffset = viewmodel.Offset.Multiply(viewmodel.Zoom).Multiply(scale);
-            Point correctedPos = relativePosition.Subtract(correctedOffset);
+            //var CorrectedOffset = viewmodel.Offset.Multiply(viewmodel.Zoom).Multiply(scale);
+            Point correctedPos = relativePosition.Subtract(CorrectedOffset);
 
             Clicked?.Invoke(this, correctedPos);
 

@@ -1,6 +1,9 @@
 using System;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using ColorTiles.ViewModels;
+using ColorTiles.Views.Controls;
 
 namespace ColorTiles.Views;
 
@@ -30,6 +33,7 @@ public partial class MainView : UserControl
         if (DataContext is MainViewModel viewModel)
         {
             viewModel.GameOverMenuViewModel.QuitButtonClicked -= OnGameOverMenuQuitButtonClicked;
+            GameBoardControl.OffsetChanged -= viewModel.HUDViewModel.OnOffsetChanged;
         }
     }
 
@@ -40,6 +44,7 @@ public partial class MainView : UserControl
         if (DataContext is MainViewModel viewModel)
         {
             viewModel.GameOverMenuViewModel.QuitButtonClicked += OnGameOverMenuQuitButtonClicked;
+            GameBoardControl.OffsetChanged += viewModel.HUDViewModel.OnOffsetChanged;
         }
     }
 
@@ -54,7 +59,15 @@ public partial class MainView : UserControl
             viewModel.Dispose();
         }
             
-        // TODO: might want to use DI to provide a proper implementation of quitting native to each platforms
-        _window?.Close();
+        // TODO: might want to use DI to provide a proper implementation of quitting native to each platforms without classic desktop lifetime
+        //_window?.Close();
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.Shutdown();
+        }
+        else if (Application.Current?.ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
+        {
+            
+        }
     }
 }

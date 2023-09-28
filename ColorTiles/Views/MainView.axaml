@@ -17,9 +17,9 @@
         <controls:GameBackground Name="GameBackgroundControl" HorizontalAlignment="Stretch" Tileset="{Binding Tileset}" />
         <controls:HUDControl Name="HUD" DataContext="{Binding HUDViewModel}" IsVisible="{Binding IsEnabled}" IsEnabled="{Binding IsEnabled}"/>
         <!--<controls:GameBoard Name="GameBoardControl" DataContext="{Binding GameBoardViewModel}" Tileset="{Binding Tileset}" Rows="15" Columns="23"/>-->
-        <controls:GameBoard Name="GameBoardGrid" DataContext="{Binding GameBoardViewModel}"/>
+        <controls:GameBoard Name="GameBoardControl" DataContext="{Binding GameBoardViewModel}"/>
         <menus:MainMenu Name="MainMenuControl" DataContext="{Binding MainMenuViewModel}" IsVisible="{Binding IsEnabled}" IsEnabled="{Binding IsEnabled}"/>
         <menus:GameOverMenu Name="GameOverMenuControl" DataContext="{Binding GameOverMenuViewModel}" IsVisible="{Binding IsEnabled}" IsEnabled="{Binding IsEnabled}"/>
-  </Grid>
+    </Grid>
 
 </UserControl>

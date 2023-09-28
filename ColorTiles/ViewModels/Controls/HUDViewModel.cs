@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using Avalonia;
 using ColorTiles.ViewModels.Controls.HUD;
 using ReactiveUI;
@@ -12,6 +11,7 @@ public class HUDViewModel : ToggleableControlViewModel
     private long _penalty = 0;
     private Thickness _buttonPadding;
     private Thickness _textPadding;
+    private double _maxButtonWidth = 0;
 
     public int Score
     {
@@ -37,6 +37,12 @@ public class HUDViewModel : ToggleableControlViewModel
         set => this.RaiseAndSetIfChanged(ref _textPadding, value);
     }
 
+    public double MaxButtonWidth
+    {
+        get => _maxButtonWidth;
+        set => this.RaiseAndSetIfChanged(ref _maxButtonWidth, value);
+    }
+
     public TimerBarViewModel TimerBar { get; set; }
 
     public event EventHandler? ResetButtonClicked;
@@ -59,8 +65,8 @@ public class HUDViewModel : ToggleableControlViewModel
         }
         else
         {
-            ButtonPadding = new Thickness(8, -6);
-            TextPadding = new Thickness(0,-8);
+            ButtonPadding = new Thickness(4, -4, 8, 0);
+            TextPadding = new Thickness(0, -8);
         }
 
         Disable();
@@ -102,5 +108,10 @@ public class HUDViewModel : ToggleableControlViewModel
     public void OnTimeExpired(object? sender, EventArgs e)
     {
         Disable();
+    }
+
+    public void OnOffsetChanged(object? sender, Size offset)
+    {
+        MaxButtonWidth = offset.Width;
     }
 }

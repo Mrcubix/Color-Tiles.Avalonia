@@ -1,9 +1,8 @@
 using System;
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
+using ColorTiles.Interfaces;
 using ColorTiles.ViewModels;
-using ColorTiles.Views.Controls;
+using Splat;
 
 namespace ColorTiles.Views;
 
@@ -15,7 +14,7 @@ public partial class MainView : UserControl
     {
         InitializeComponent();
 
-        Loaded += (_,_) => 
+        Loaded += (_, _) =>
         {
             _window = TopLevel.GetTopLevel(this) as Window;
         };
@@ -54,20 +53,17 @@ public partial class MainView : UserControl
     /// </summary>
     private void OnGameOverMenuQuitButtonClicked(object? sender, EventArgs e)
     {
-        if (DataContext is MainViewModel viewModel)
+        // Obtain currently binded IPlatformQuit
+        var platformQuit = Locator.Current.GetService<IPlatformQuit>();
+
+        if (platformQuit != null)
         {
-            viewModel.Dispose();
-        }
-            
-        // TODO: might want to use DI to provide a proper implementation of quitting native to each platforms without classic desktop lifetime
-        //_window?.Close();
-        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-        {
-            desktop.Shutdown();
-        }
-        else if (Application.Current?.ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
-        {
-            
+            if (DataContext is MainViewModel viewModel)
+            {
+                viewModel.Dispose();
+            }
+
+            platformQuit.Quit();
         }
     }
 }

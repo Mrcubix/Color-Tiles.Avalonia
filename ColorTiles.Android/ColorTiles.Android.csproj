@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AndroidResource Include="../ColorTiles/Assets/Sprites/icon_192.png">
+    <AndroidResource Include="../ColorTiles/Assets/Sprites/icon_256.png">
       <Link>Resources\drawable\Icon.png</Link>
     </AndroidResource>
   </ItemGroup>

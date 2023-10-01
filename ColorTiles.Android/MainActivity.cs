@@ -1,12 +1,12 @@
 ﻿using Android.App;
 using Android.Content.PM;
-using Android.Graphics;
 using Android.OS;
 using Android.Views;
-using AndroidX.Core.View;
 using Avalonia;
 using Avalonia.Android;
 using Avalonia.ReactiveUI;
+using ColorTiles.Interfaces;
+using Splat;
 
 namespace ColorTiles.Android;
 
@@ -18,8 +18,14 @@ namespace ColorTiles.Android;
     ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.UiMode)]
 public class MainActivity : AvaloniaMainActivity<App>
 {
+    internal readonly AndroidQuit platformQuit = null!;
+
+    public MainActivity() => platformQuit = new AndroidQuit(this);
+
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
     {
+        Locator.CurrentMutable.RegisterConstant<IPlatformQuit>(platformQuit);
+
         return base.CustomizeAppBuilder(builder)
             .WithInterFont()
             .UseReactiveUI();
@@ -37,6 +43,14 @@ public class MainActivity : AvaloniaMainActivity<App>
         SetFullScreen();
 
         base.OnCreate(savedInstanceState);
+    }
+
+    public override void OnBackPressed()
+    {
+        base.OnBackPressed();
+
+        // Might remove that later
+        platformQuit.Quit();
     }
 
     private void SetFullScreen()

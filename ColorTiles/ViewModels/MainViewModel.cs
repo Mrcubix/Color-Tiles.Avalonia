@@ -57,8 +57,10 @@ public class MainViewModel : ViewModelBase
         Tileset = null!;
         Audioset = null!;
 
+        var canQuit = !(OperatingSystem.IsBrowser() || OperatingSystem.IsIOS());
+
         MainMenuViewModel = new MainMenuViewModel();
-        GameOverMenuViewModel = new GameOverMenuViewModel();
+        GameOverMenuViewModel = new GameOverMenuViewModel(canQuit);
 
         HUDViewModel = null!;
         GameBoardViewModel = null!;
@@ -75,8 +77,10 @@ public class MainViewModel : ViewModelBase
         Tileset = tileset;
         Audioset = audioset;
 
+        var canQuit = !(OperatingSystem.IsBrowser() || OperatingSystem.IsIOS());
+
         MainMenuViewModel = new MainMenuViewModel();
-        GameOverMenuViewModel = new GameOverMenuViewModel();
+        GameOverMenuViewModel = new GameOverMenuViewModel(canQuit);
 
         HUDViewModel = null!;
         GameBoardViewModel = null!;

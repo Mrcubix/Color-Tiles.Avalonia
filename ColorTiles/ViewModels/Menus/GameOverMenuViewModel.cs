@@ -22,10 +22,12 @@ public class GameOverMenuViewModel : ToggleableControlViewModel
         set => this.RaiseAndSetIfChanged(ref _padding, value);
     }
 
+    public bool CanQuit { get; init; }
+
     public event EventHandler? PlayAgainButtonClicked;
     public event EventHandler? QuitButtonClicked;
 
-    public GameOverMenuViewModel() 
+    public GameOverMenuViewModel(bool canQuit = true)
     { 
         Score = 0;
 
@@ -33,6 +35,8 @@ public class GameOverMenuViewModel : ToggleableControlViewModel
             Padding = new Thickness(0, 4, 0, 0);
         else
             Padding = new Thickness(8, -6);
+
+        CanQuit = canQuit;
 
         Disable();
     }

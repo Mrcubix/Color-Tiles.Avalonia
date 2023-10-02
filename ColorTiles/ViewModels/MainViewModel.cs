@@ -93,18 +93,29 @@ public class MainViewModel : ViewModelBase
     {
         Tileset ??= TilesetManager.LoadDefault();
 
-        // Only supported on Desktop platforms at the moment (Issue need to be fixed in OpenTK to Detect Android & IOS properly)
-        if (!OperatingSystem.IsBrowser())
-            AudiosetManager.InitializeOpenAL();
+        try
+        {
+            // All platforms except browsers can make use of OpenAL
+            if (!OperatingSystem.IsBrowser())
+                AudiosetManager.InitializeOpenAL();
 
-        Audioset ??= AudiosetManager.LoadDefault();
+            Audioset ??= AudiosetManager.LoadDefault();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Audio failed to initialize with the following exception : ");
+            Console.WriteLine(e);
+            Console.WriteLine("Audio will be disabled.");
+
+            Audioset = null!;
+        }
 
         InitializeViewModels();
     }
 
     private void InitializeViewModels()
     {
-        HUDViewModel = new HUDViewModel(120, 10000);
+        HUDViewModel = new HUDViewModel(120, 10);
         GameBoardViewModel = new GameBoardViewModel(Tileset, 23, 15, 20);
     }
 
@@ -187,6 +198,9 @@ public class MainViewModel : ViewModelBase
     {
         // Disable the board
         GameBoardViewModel.Disable();
+
+        // play the game over SFX
+        //Audioset?.GameOverSFX.Play();
 
         GameOverMenuViewModel.Score = HUDViewModel.Score;
         GameOverMenuViewModel.Enable();

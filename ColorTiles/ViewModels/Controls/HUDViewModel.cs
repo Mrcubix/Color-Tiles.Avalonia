@@ -76,12 +76,12 @@ public class HUDViewModel : ToggleableControlViewModel
     { 
     }
 
-    public HUDViewModel(long initialTimeMilliseconds, long penalty) : this(initialTimeMilliseconds)
+    public HUDViewModel(long initialTimeMilliseconds, long penaltyTimeMilliseconds) : this(initialTimeMilliseconds)
     {
-        Penalty = penalty;
+        Penalty = penaltyTimeMilliseconds;
     }
 
-    public HUDViewModel(int initialTimeSeconds, long penalty) : this((long)initialTimeSeconds * 1000, penalty)
+    public HUDViewModel(int initialTimeSeconds, int penaltyTimeSeconds) : this((long)initialTimeSeconds * 1000, (long)penaltyTimeSeconds * 1000)
     {
     }
 

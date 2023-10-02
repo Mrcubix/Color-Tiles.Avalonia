@@ -102,24 +102,62 @@ public class WebAudioFile : WaveAudioFile
 
         if(!SetVariablesForFile(ID, Volume, Pitch, DoLoop))
             throw new Exception("Failed to set variables for audio file.");
+
+        HasLoaded = true;
     }
 
     public override void Play()
     {
+        if (HasLoaded == false)
+            return;
+
         if(!PlayFile(ID))
             throw new Exception("Failed to play audio file.");
     }
 
     public override void Pause()
     {
+        if (HasLoaded == false)
+            return;
+
         if(!PauseFile(ID))
             throw new Exception("Failed to pause audio file.");
     }
 
     public override void Stop()
     {
+        if (HasLoaded == false)
+            return;
+
         if(!StopFile(ID))
             throw new Exception("Failed to stop audio file.");
+    }
+
+    protected override void OnVolumeChanged()
+    {
+        if (HasLoaded == false)
+            return;
+
+        if(!SetVolumeForFile(ID, Volume))
+            throw new Exception("Failed to set volume for audio file.");
+    }
+
+    protected override void OnPitchChanged()
+    {
+        if (HasLoaded == false)
+            return;
+
+        if(!SetPitchForFile(ID, Pitch))
+            throw new Exception("Failed to set pitch for audio file.");
+    }
+
+    protected override void OnLoopChanged()
+    {
+        if (HasLoaded == false)
+            return;
+
+        if(!SetDoLoopForFile(ID, DoLoop))
+            throw new Exception("Failed to set loop for audio file.");
     }
 
     public override void Dispose()

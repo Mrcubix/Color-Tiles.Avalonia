@@ -1,7 +1,20 @@
 // ------------------ Variables ------------------ //
 
+let resumed = false;
+
 let files = [];
 let fileIds = [];
+
+// --------------- Event Listeners --------------- //
+
+document.addEventListener("click", () => {
+    if (!resumed) {
+        resumed = true;
+        for (let i = 0; i < files.length; i++) {
+            files[i].resumeContext();
+        }
+    }
+});
 
 // ------------------ Exports ------------------ //
 
@@ -432,6 +445,12 @@ class AudioFile
         });
     }
 
+    resumeContext()
+    {
+        if (this.#audioContext.state === "suspended")
+            this.#audioContext.resume();
+    }
+
     /**
      * Play the audio file
      */
@@ -439,6 +458,8 @@ class AudioFile
     {
         if (this.#source != null && this.hasLoaded)
         {
+            if (this.#audioContext.state === "suspended")
+                return;
 
             this.#resetSource();
             this.#audioContext.resume();

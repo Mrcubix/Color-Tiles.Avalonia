@@ -1,5 +1,6 @@
 ﻿using System;
 using Avalonia;
+using ColorTiles.Entities.Tools;
 using ColorTiles.ViewModels.Controls;
 using ReactiveUI;
 
@@ -7,6 +8,8 @@ namespace ColorTiles.ViewModels.Menus;
 
 public class GameOverMenuViewModel : ToggleableControlViewModel
 {
+    private readonly AudioSet? audioset;
+
     private int _score;
     private Thickness _padding;
     
@@ -46,6 +49,11 @@ public class GameOverMenuViewModel : ToggleableControlViewModel
         Score = score;
     }
 
+    public GameOverMenuViewModel(AudioSet? audioset, bool canQuit = true) : this(canQuit)
+    {
+        this.audioset = audioset;
+    }
+
     public void OnPlayAgainButtonClicked()
     {
         Disable();
@@ -55,5 +63,10 @@ public class GameOverMenuViewModel : ToggleableControlViewModel
     public void OnQuitButtonClicked()
     {
         QuitButtonClicked?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void OnButtonHovered()
+    {
+        audioset?.ButtonHoverSFX.Play();
     }
 }

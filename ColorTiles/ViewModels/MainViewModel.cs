@@ -84,6 +84,8 @@ public class MainViewModel : ViewModelBase
                 AudiosetManager.InitializeOpenAL();
 
             Audioset ??= AudiosetManager.LoadDefault();
+
+            TweakAudio();
         }
         catch (Exception e)
         {
@@ -97,12 +99,20 @@ public class MainViewModel : ViewModelBase
         InitializeViewModels();
     }
 
+    private void TweakAudio()
+    {
+        if (Audioset == null)
+            return;
+
+        Audioset.ButtonHoverSFX.Volume = 0.45f;
+    }
+
     private void InitializeViewModels()
     {
         var canQuit = !(OperatingSystem.IsBrowser() || OperatingSystem.IsIOS());
 
-        MainMenuViewModel = new MainMenuViewModel();
-        GameOverMenuViewModel = new GameOverMenuViewModel(canQuit);
+        MainMenuViewModel = new MainMenuViewModel(Audioset);
+        GameOverMenuViewModel = new GameOverMenuViewModel(Audioset, canQuit);
 
         HUDViewModel = new HUDViewModel(120, 10);
         GameBoardViewModel = new GameBoardViewModel(Tileset, 23, 15, 20);

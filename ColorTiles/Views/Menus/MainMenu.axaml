@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:locals="clr-namespace:ColorTiles.Assets.Localizations"
+             xmlns:controls="clr-namespace:ColorTiles.Views.Controls"
              xmlns:vm="clr-namespace:ColorTiles.ViewModels.Menus"
              mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
              x:Class="ColorTiles.Views.Menus.MainMenu"
@@ -27,11 +28,11 @@
 
         <Image Name="TitleImage" Source="/Assets/Sprites/Title.png" MaxHeight="230" Grid.Row="1" Grid.Column="1"/>
 
-        <Button Name="PlayButton" Command="{Binding OnPlayButtonClicked}" MaxHeight="246" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <controls:HoverButton Name="PlayButton" Command="{Binding OnPlayButtonClicked}" HoverCommand="{Binding OnButtonHovered}" MaxHeight="246" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Button.Content>
                 <Image Name="PlayButtonImage" Source="/Assets/Sprites/Play.png" />
             </Button.Content>
-        </Button>
+        </controls:HoverButton>
         
     </Grid>
 

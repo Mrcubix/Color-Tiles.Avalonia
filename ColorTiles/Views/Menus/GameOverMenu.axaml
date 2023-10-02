@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:locals="clr-namespace:ColorTiles.Assets.Localizations"
+             xmlns:controls="clr-namespace:ColorTiles.Views.Controls"
              xmlns:vm="clr-namespace:ColorTiles.ViewModels.Menus"
              mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
              x:Class="ColorTiles.Views.Menus.GameOverMenu"
@@ -45,16 +46,16 @@
 
         <Grid RowDefinitions="Auto,Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Row="3" Column="1" Margin="0,32" Name="ButtonsArea">
 
-            <Button Command="{Binding OnPlayAgainButtonClicked}" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#1FD21F" 
-                    Margin="0,4" Padding="{Binding Padding}" Grid.Row="0">
+            <controls:HoverButton Command="{Binding OnPlayAgainButtonClicked}" HoverCommand="{Binding OnButtonHovered}" BorderThickness="1" Background="#1FD21F" 
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,4" Padding="{Binding Padding}" Grid.Row="0">
                 <TextBlock Text="{x:Static locals:Resources.PlayAgainLabel}" FontSize="32" FontWeight="Medium" 
                            Foreground="White" TextAlignment="Center" Margin="0,0,0,8"/>
-            </Button>
-            <Button Command="{Binding OnQuitButtonClicked}" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#1FD21F" 
-                    Padding="{Binding Padding}" Grid.Row="1" IsVisible="{Binding CanQuit}">
+            </controls:HoverButton>
+            <controls:HoverButton Command="{Binding OnQuitButtonClicked}" HoverCommand="{Binding OnButtonHovered}" BorderThickness="1"  Background="#1FD21F" 
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="{Binding Padding}" Grid.Row="1" IsVisible="{Binding CanQuit}">
                 <TextBlock Text="{x:Static locals:Resources.QuitLabel}" FontSize="32" FontWeight="Medium" 
                            Foreground="White" TextAlignment="Center" Margin="0,0,0,8"/>
-            </Button>
+            </controls:HoverButton>
 
         </Grid>
     </Grid>

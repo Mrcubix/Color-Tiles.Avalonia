@@ -57,14 +57,6 @@ public class MainViewModel : ViewModelBase
         Tileset = null!;
         Audioset = null!;
 
-        var canQuit = !(OperatingSystem.IsBrowser() || OperatingSystem.IsIOS());
-
-        MainMenuViewModel = new MainMenuViewModel();
-        GameOverMenuViewModel = new GameOverMenuViewModel(canQuit);
-
-        HUDViewModel = null!;
-        GameBoardViewModel = null!;
-
         Initialize();
         PostInitialize();
     }
@@ -76,14 +68,6 @@ public class MainViewModel : ViewModelBase
 
         Tileset = tileset;
         Audioset = audioset;
-
-        var canQuit = !(OperatingSystem.IsBrowser() || OperatingSystem.IsIOS());
-
-        MainMenuViewModel = new MainMenuViewModel();
-        GameOverMenuViewModel = new GameOverMenuViewModel(canQuit);
-
-        HUDViewModel = null!;
-        GameBoardViewModel = null!;
 
         Initialize();
         PostInitialize();
@@ -115,6 +99,11 @@ public class MainViewModel : ViewModelBase
 
     private void InitializeViewModels()
     {
+        var canQuit = !(OperatingSystem.IsBrowser() || OperatingSystem.IsIOS());
+
+        MainMenuViewModel = new MainMenuViewModel();
+        GameOverMenuViewModel = new GameOverMenuViewModel(canQuit);
+
         HUDViewModel = new HUDViewModel(120, 10);
         GameBoardViewModel = new GameBoardViewModel(Tileset, 23, 15, 20);
     }

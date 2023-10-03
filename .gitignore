@@ -453,7 +453,6 @@ $RECYCLE.BIN/
 !.vscode/launch.json
 !.vscode/extensions.json
 
-TODO.md
 build
 BrowserJavascriptExtension.cs
 Common.props

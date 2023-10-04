@@ -104,7 +104,7 @@ public class MainViewModel : ViewModelBase
         if (Audioset == null)
             return;
 
-        Audioset.ButtonHoverSFX.Volume = 0.55f;
+        Audioset.ButtonHoverSFX.Volume = 0.50f;
     }
 
     private void InitializeViewModels()

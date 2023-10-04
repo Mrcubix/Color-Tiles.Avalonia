@@ -14,6 +14,9 @@ public partial class GameBoard : Control
     private Size _baseSize = new(1280, 720);
     private RenderTargetBitmap _blankTile = new(new PixelSize(48, 48), new Vector(96, 96));
     private Size _correctedOffset = default;
+    private Size currentScale = new(1, 1);
+    private Size currentTileSize = new(48, 48);
+    private Rect sourceTileRect = new(0, 0, 48, 48);    
 
     
     /// <summary>
@@ -32,8 +35,6 @@ public partial class GameBoard : Control
 
     public event EventHandler<Size> OffsetChanged;
 
-    public event EventHandler<Point>? Clicked;
-
     public GameBoard()
     {
         OffsetChanged = null!;
@@ -48,6 +49,8 @@ public partial class GameBoard : Control
             viewModel.BoardCleared -= (_, _) => InvalidateVisual();
             viewModel.BoardGenerated -= (_, _) => InvalidateVisual();
             viewModel.MatchesFound -= (_, _) => InvalidateVisual();
+
+            viewModel.OffsetChanged -= OnOffsetChanged;
         }
     }
 
@@ -60,6 +63,30 @@ public partial class GameBoard : Control
             viewModel.BoardCleared += (_, _) => InvalidateVisual();
             viewModel.BoardGenerated += (_, _) => InvalidateVisual();
             viewModel.MatchesFound += (_, _) => InvalidateVisual();
+
+            viewModel.OffsetChanged += OnOffsetChanged;
+
+            OnOffsetChanged(this, viewModel.Offset);
+        }
+    }
+
+    protected override void OnSizeChanged(SizeChangedEventArgs e)
+    {
+        base.OnSizeChanged(e);
+
+        currentScale = Bounds.Size.Divide(_baseSize);
+
+        if (DataContext is GameBoardViewModel viewmodel)
+        {
+            OnOffsetChanged(this, viewmodel.Offset);
+
+            if (viewmodel.Tileset == null)
+                return;
+
+            var textureResolution = viewmodel.Tileset.TextureResolution;
+
+            currentTileSize = viewmodel.Zoom.Multiply(textureResolution).Multiply(currentScale);
+            sourceTileRect = new Rect(0, 0, textureResolution.Width, textureResolution.Height);
         }
     }
 
@@ -76,19 +103,6 @@ public partial class GameBoard : Control
         if (viewmodel.Board == null || viewmodel.Board.Count == 0)
             return;
 
-        var textureResolution = viewmodel.Tileset.TextureResolution;
-
-        var sourceRect = new Rect(0, 0, textureResolution.Width, textureResolution.Height);
-
-        Size scale = Bounds.Size.Divide(_baseSize);
-
-        // the offset is affected by the zoom and the current window size
-        CorrectedOffset = viewmodel.Zoom.Multiply(viewmodel.Offset).Multiply(scale);
-            
-        // the size of the tile is affected by the zoom and the current window size
-        Size destSize = viewmodel.Zoom.Multiply(textureResolution).Multiply(scale);
-        viewmodel.ScaledTileSize = destSize;
-
         // draw tiles starting from the offset, final image should be Rows * Columns pixels
         for (int y = 0; y < viewmodel.Rows; y++)
         {
@@ -99,12 +113,14 @@ public partial class GameBoard : Control
                 IImage tileImage = tile == null ? _blankTile : viewmodel.Tileset.Tiles[tile.AtlasIndex];
 
                 // The previous calculations affect the calculation of the position of the tile
-                Point pos = new(x * destSize.Width + CorrectedOffset.Width, y * destSize.Height + CorrectedOffset.Height);
+                Point pos = new(x * currentTileSize.Width + CorrectedOffset.Width, y * currentTileSize.Height + CorrectedOffset.Height);
 
-                context.DrawImage(tileImage, sourceRect, new Rect(pos, destSize));
+                context.DrawImage(tileImage, sourceTileRect, new Rect(pos, currentTileSize));
             }
         }
     }
+
+    #region In-Control events
 
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
@@ -123,14 +139,29 @@ public partial class GameBoard : Control
 
         if (DataContext is GameBoardViewModel viewmodel)
         {
-            Size scale = Bounds.Size.Divide(_baseSize);
+            Point correctedPosition = relativePosition.Subtract(CorrectedOffset);
 
-            //var CorrectedOffset = viewmodel.Offset.Multiply(viewmodel.Zoom).Multiply(scale);
-            Point correctedPos = relativePosition.Subtract(CorrectedOffset);
+            // Converting previously calculated position to tile position
+            Point position = new((int)(correctedPosition.X / currentTileSize.Width),
+                                 (int)(correctedPosition.Y / currentTileSize.Height));
 
-            Clicked?.Invoke(this, correctedPos);
-
-            viewmodel.OnBoardClicked(correctedPos.ToNativePoint());
+            viewmodel.OnBoardClicked(position.ToNativePoint());
         }
     }
+
+    #endregion
+
+    #region External Events
+
+    private void OnOffsetChanged(object? sender, PixelSize offset)
+    {
+        if (DataContext is GameBoardViewModel viewmodel)
+        {
+            // the offset is affected by the zoom and the current window size
+            CorrectedOffset = viewmodel.Zoom.Multiply(offset).Multiply(currentScale);
+            OffsetChanged?.Invoke(this, CorrectedOffset);
+        }
+    }
+
+    #endregion
 }

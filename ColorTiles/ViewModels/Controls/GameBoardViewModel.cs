@@ -28,7 +28,7 @@ public class GameBoardViewModel : ToggleableControlViewModel, IDisposable
     public GameTileSet? Tileset
     {
         get => _tileset;
-        set
+        init
         {
             this.RaiseAndSetIfChanged(ref _tileset, value);
             SettingsChanged?.Invoke(this, EventArgs.Empty);
@@ -98,6 +98,7 @@ public class GameBoardViewModel : ToggleableControlViewModel, IDisposable
         set
         {
             this.RaiseAndSetIfChanged(ref _offset, value);
+            OffsetChanged?.Invoke(this, value);
             SettingsChanged?.Invoke(this, EventArgs.Empty);
         }
     }    
@@ -115,8 +116,6 @@ public class GameBoardViewModel : ToggleableControlViewModel, IDisposable
         }
     }
 
-    public Avalonia.Size ScaledTileSize { get; set; }
-
     #region Events
 
     public event EventHandler? OnPenalty;
@@ -127,6 +126,7 @@ public class GameBoardViewModel : ToggleableControlViewModel, IDisposable
     public event EventHandler<ColorTile?[]>? TilesRemovalRequested;
 
     public event EventHandler<Avalonia.PixelSize>? DimensionsChanged;
+    public event EventHandler<Avalonia.PixelSize>? OffsetChanged;
     public event EventHandler? SettingsChanged;
 
     #endregion
@@ -136,9 +136,6 @@ public class GameBoardViewModel : ToggleableControlViewModel, IDisposable
     public GameBoardViewModel(GameTileSet tileset, int columns, int rows, int tilesPerColor, Avalonia.PixelSize offset, Avalonia.Size zoom)
     {
         Tileset = tileset;
-
-        if (Tileset != null)
-            ScaledTileSize = new Avalonia.Size(Tileset.TextureResolution.Width, Tileset.TextureResolution.Height);
 
         Rows = rows;
         Columns = columns;
@@ -243,17 +240,13 @@ public class GameBoardViewModel : ToggleableControlViewModel, IDisposable
     /// <summary>
     ///   Called externally when the board is clicked.
     /// </summary>
-    public void OnBoardClicked(Point relativePosition)
+    public void OnBoardClicked(Point position)
     {
         if (!IsEnabled)
             return;
 
         if (Tileset == null)
             throw new Exception("Tileset is null.");
-
-        // Convert the relative position to a tile index.
-        Point position = new((int)(relativePosition.X / ScaledTileSize.Width),
-                             (int)(relativePosition.Y / ScaledTileSize.Height));
 
         // If the tile index is out of bounds, return.
         if (position.X < 0 || position.X >= Columns || position.Y < 0 || position.Y >= Rows)
